@@ -1,0 +1,17 @@
+{
+  "name": "cs-546-final-project",
+  "version": "1.0.0",
+  "description": "Our final project module",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Adib Osmany, Neel Meyyur",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-handlebars": "^8.0.1",
+    "express-session": "^1.18.0"
+  }
+}
