@@ -1,0 +1,32 @@
+
+body{
+    font-size: large;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: aqua;
+    margin: 10px; 
+}
+
+form{
+    margin-top: 2em;
+    text-align: center;
+    position: relative;
+    transform: rotateX(20%);
+    
+}
+
+label{
+    font-weight: bolder;
+    font-style: italic;
+    background-color:darkkhaki;
+}
+
+textarea{
+    margin: 1em;
+    padding: 10px;
+    border-radius: 15px;
+    width: 500px;
+    height: 200px;
+    background: whitesmoke;
+    color: darkslategrey;
+    font-size: 25px;
+}
