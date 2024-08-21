@@ -7,7 +7,7 @@
   "scripts": {
     "start": "node app.js"
   },
-  "author": "Adib Osmany, Neel Meyyur",
+  "author": "Adib Osmany, Neel Meyyur, Tara Giblin",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
