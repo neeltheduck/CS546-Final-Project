@@ -1,5 +1,6 @@
 import express from 'express';
-import {registerUser} from '../data/users.js';
+import {registerUser, loginUser} from '../data/users.js';
+import helper from '../helpers.js';
 // import { Router } from 'express';
 const router = express.Router();
 
@@ -21,9 +22,14 @@ router.route('/register').get(async (req, res) => {
     try{
         const userdata = req.body;
         // need to do check for wrong inputs
-        userdata.username = userdata.username.trim();
-        userdata.password = userdata.password.trim();
-        userdata.confirmPassword = userdata.confirmPassword.trim();
+        userdata.username = await helper.checkString(userdata.username, 'Username');
+        userdata.password = await helper.checkString(userdata.password, 'Password');
+        userdata.confirmPassword = await helper.checkString(userdata.confirmPassword, 'Confirm Password');
+        userdata.pronouns = await helper.checkString(userdata.pronouns, 'Pronouns');
+        userdata.bio = await helper.checkString(userdata.bio, 'Bio');
+        userdata.themePreference = await helper.checkString(userdata.themePreference, 'Theme Preference');
+        if (userdata.password !== userdata.confirmPassword) throw 'Error: Password and Confirm Password must be the same';
+
         console.log("Userdata:", userdata);
         console.log("Username:", userdata.username);
         console.log("Password:", userdata.password);
@@ -32,7 +38,9 @@ router.route('/register').get(async (req, res) => {
         console.log("Bio:", userdata.bio);
         console.log("User Location:", userdata.userLocation);
         console.log("Theme Preference:", userdata.themePreference);
-        const userinfo={username: userdata.username,
+
+        const userinfo = {
+            username: userdata.username,
             password: userdata.password,
             pronouns: userdata.pronouns,
             bio: userdata.bio,
@@ -40,14 +48,13 @@ router.route('/register').get(async (req, res) => {
             themePreference: userdata.themePreference
         };
 
-        const insertuser= await registerUser(userinfo);
+        const insertuser = await registerUser(userinfo);
         console.log("Insert User:");
         console.log(insertuser);
-        if(insertuser){
+        if (insertuser){
             console.log("User Registered");
             return res.redirect('/login');
-        }
-        else{
+        } else {
             return res.status(500).json({error: 'User not registered'});
         }
     } catch (e) {
@@ -64,6 +71,24 @@ router.route('/login').get(async (req, res) => {
         console.log(e);
         return res.status(500).json({error: e});
     }
+    })
+    .post(async (req, res) => {
+        const userInfo = req.body;
+
+        try {
+            userInfo.username = await helper.checkString(userInfo.username, 'Username');
+            userInfo.password = await helper.checkString(userInfo.password, 'Password');
+        } catch (e) {
+            return res.status(400).render('login', {error: e});
+        }
+
+        try {
+            const user = await loginUser(userInfo.username, userInfo.password);
+            if (!user) return res.status(400).render('login', {error: e});
+            return res.redirect('/user');
+        } catch (e) {
+            return res.status(400).render('login', {error: e});
+        }
     });
 
 
