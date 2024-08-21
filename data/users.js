@@ -207,7 +207,7 @@ export const loginUser = async (username, password) => {
             reservationHistory: userCheck.reservationHistory,
             tradeStatuses: userCheck.tradeStatuses,
             wishList: userCheck.wishList,
-      themePreference: userCheck.themePreference, // from the lab, might be good to have
+            themePreference: userCheck.themePreference, // from the lab, might be good to have
             role: userCheck.role // from the lab, might be good to have
         };
     }
