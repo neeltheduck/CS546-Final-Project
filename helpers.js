@@ -28,7 +28,7 @@ const checkString = async (str, varName) => {
     if (varName == 'Pronouns' && (str.toLowerCase() !== 'he/him' && str.toLowerCase() !== 'she/her' && str.toLowerCase() !== 'they/them')) throw `Error: ${varName} must either be He/Him, She/Her, or They/Them`;
     if (varName === 'Bio' && (str.length < 20 || str.length > 255)) throw `Error: ${varName} must be (inclusive) 25-255 characters long`;
     if (varName === 'Theme Preference' && (str.toLowerCase() !== 'light' && str.toLowerCase() !== 'dark')) throw `Error: ${varName} must be either 'Light' or 'Dark'`;
-
+    
     return str;
 };
 
