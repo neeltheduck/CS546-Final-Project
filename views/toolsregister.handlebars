@@ -20,7 +20,7 @@
                 location: req.body.location,
                 images: req.body.images
             }; --}}
-    <form action="/toolsregister" id="tool-info" name="tool-info" method="POST">
+    <form action="/toolsregister" id="tool-info" name="tool-info" class = "dark" method="POST">
             
             <label for="toolName">Tool Name</label>
             <input type="text" id="toolName" name="toolName"><br>
@@ -44,6 +44,7 @@
             <input type="text" id="images" name="images"><br>
     
             <button id="submitButton" name="submitButton">Submit</button>
-        </form>
+        </form><br>
+        <div id="toolregistererror" class="formerror" hidden></div>
         <script src="../public/js/client_side_validation.js"></script>
 </body>
