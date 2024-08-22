@@ -5,21 +5,21 @@ import helper from '../helpers.js';
 // addTool
 export const addTool = async ({toolName, description, condition, userID, availability, location, images}) => {
     try {
-        toolName = await helper.checkString(toolName, 'Tool Name');
-        description = await helper.checkString(description, 'Description');
-        condition = await helper.checkString(condition, 'Condition');
-        userID = await helper.checkId(userID, 'User ID');
-        location = await helper.checkString(location, 'Location');
+        // toolName = await helper.checkString(toolName, 'Tool Name');
+        // description = await helper.checkString(description, 'Description');
+        // condition = await helper.checkString(condition, 'Condition');
+        // // userID = await helper.checkId(userID, 'User ID');
+        // location = await helper.checkString(location, 'Location');
 
-        if (!availability) throw 'Error: Availability with a Start and End Date for the tool must be provided';
-        availability.start = await helper.checkDate(availability.start, 'Availability Start Date');
-        availability.end = await helper.checkDate(availability.end, 'Availability End Date');
+        // if (!availability) throw 'Error: Availability with a Start and End Date for the tool must be provided';
+        // availability.start = await helper.checkDate(availability.start, 'Availability Start Date');
+        // availability.end = await helper.checkDate(availability.end, 'Availability End Date');
 
-        if (!images) throw 'Error: Images must be provided';
-        if (!images.isArray()) throw 'Error: Images must be an array of tool images';
-        for (let image in images) {
-            image = await helper.checkString(image, 'Image');
-        }
+        // if (!images) throw 'Error: Images must be provided';
+        // if (!images.isArray()) throw 'Error: Images must be an array of tool images';
+        // for (let image in images) {
+        //     image = await helper.checkString(image, 'Image');
+        // }
         
         const toolCollection = await tools();
         const dateAdded = new Date().toLocaleDateString();
@@ -36,6 +36,7 @@ export const addTool = async ({toolName, description, condition, userID, availab
         console.log(result);
         return result;
     } catch (e) {
+        console.log("Error in addTool:");
         console.log(e);
         throw `Error: Tool was not successfully added.`;
     }
@@ -58,6 +59,15 @@ export const getToolWithID = async (id) => {
     return tool;
 };
 
+// get tool list from name 
+export const getToolWithName = async (toolName) => {
+    // toolName = await helper.checkString(toolName, 'Tool Name');
+    const toolCollection = await tools();
+    //find list that include the toolName 
+    // let tool = await toolCollection.find({toolName: {$regex: toolName, $options: 'i'}}).toArray();
+    if (!tool) throw 'Error: Tool not found';
+    return tool;
+};
 // updateTool
 export const updateTool = async ({toolID, toolName, description, condition, userID, dateAdded, availability, location, images}) => {
     toolID = await checkId(toolID, 'Tool ID');

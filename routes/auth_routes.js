@@ -48,7 +48,7 @@ router.route('/register').get(async (req, res) => {
             themePreference: userdata.themePreference
         };
 
-        const insertuse r= await registerUser(userinfo);
+        const insertuser= await registerUser(userinfo);
         console.log("Insert User:");
         console.log(insertuser);
         if (insertuser) {
