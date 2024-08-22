@@ -4,10 +4,10 @@ import helper from '../helpers.js';
 // import { Router } from 'express';
 const router = express.Router();
 //need to add session middleware
-router.route('/').get(async (req, res) => {
-    //code here for GET THIS ROUTE SHOULD NEVER FIRE BECAUSE OF MIDDLEWARE #1 IN SPECS.
-    return res.json({error: 'YOU SHOULD NOT BE HERE!'});
-  });
+// router.route('/').get(async (req, res) => {
+//     //code here for GET THIS ROUTE SHOULD NEVER FIRE BECAUSE OF MIDDLEWARE #1 IN SPECS.
+//     return res.json({error: 'YOU SHOULD NOT BE HERE!'});
+//   });
 
 router.route('/register').get(async (req, res) => {
     //code here for GET

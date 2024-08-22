@@ -16,7 +16,7 @@ const constructorMethod = (app) => {
   app.use('/', rating_routes);
   app.use('/', tool_routes);
   app.use('*', (req, res) => {
-    res.sendStatus(404);
+    res.redirect('/register');
   });
 };
 
