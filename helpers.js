@@ -38,4 +38,81 @@ const checkDate = async (date, varName) => {
     return date;
 }
 
+function checkIsProperString(str, variableName, min, max, validValues) {
+    if (!str) {
+          throw `${variableName || 'String'} not provided`;
+        }
+  
+    if (typeof str !== 'string') {
+      throw `${variableName || 'Provided variable'} is not a string`;
+    }
+    str=str.trim()
+    if (str.length === 0) {
+      throw `${variableName || 'Provided string'} is empty`;
+    }
+    if(min){
+        if (str.length < min) {
+            throw `${variableName || 'Provided string'} needs to have a minimum of ${min} characters`;
+        }
+    }
+    if(max){
+        if (str.length>max) {
+            throw `${variableName || 'Provided string'} needs to have a maximum of ${max} characters`;
+        }
+    }
+    if(validValues){
+        if(Array.isArray(validValues)){
+            if(validValues.length>0){
+                if(!validValues.includes(str)){
+                    throw `${variableName || 'Provided string'} is not one of the valid values`;
+                }
+            }
+        }
+    }
+
+    return str
+  }
+
+function containsNumbers(str, variableName) {
+    const numbers = '1234567890';
+    for (let j of str) {
+        if (numbers.includes(j)) {
+            throw `${variableName || 'Provided string'} cannot contain numbers`;
+        }
+    }
+}
+
+function checkIsProperPassword(str, variableName, min, max) {
+    str=checkIsProperString(str, variableName, min, max)
+    const alphabet = 'abcdefghijklmnopqrstuvwxyz';
+    const numbers = '1234567890';
+    let upper=false;
+    let num=false;
+    let special=false;
+    for (let j of str) {
+        if (numbers.includes(j)) {
+            num=true;
+        }
+        else if(alphabet.toUpperCase().includes(j)){
+            upper=true;
+        }
+        else if(j===" "){
+            throw `${variableName || 'Provided string'} cannot contain spaces`;
+        }
+        else if(!alphabet.includes(j)){
+            special=true;
+        }
+    }
+    if(!(upper && num && special)){
+        throw `${variableName || 'Provided string'} is invalid, must contain at least one uppercase character, at least one number and at least one special character:`
+    }
+
+    return str
+    }
+
 export default {checkId, checkString, checkDate};
+export {
+    checkIsProperString,
+    checkIsProperPassword,
+    containsNumbers
+  };

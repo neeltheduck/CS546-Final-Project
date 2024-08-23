@@ -2,8 +2,6 @@ import { tools } from "../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import helper from '../helpers.js';
 import axios from 'axios';
-
-
 // addTool
 export const addTool = async ({toolName, description, condition, userID, availability, location, images, autocomplete}) => {
     try {
@@ -82,7 +80,7 @@ export const getToolWithName = async (toolName) => {
 };
 // updateTool
 export const updateTool = async ({toolID, toolName, description, condition, userID, dateAdded, availability, location, images}) => {
-    toolID = await checkId(toolID, 'Tool ID');
+    toolID = await helper.checkId(toolID, 'Tool ID');
     toolName = await helper.checkString(toolName, 'Tool Name');
     description  = await helper.checkString(description, 'Description');
     condition = await helper.checkString(condition, 'Condition');

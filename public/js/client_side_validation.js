@@ -98,8 +98,8 @@ if(userregisterform){
             error.hidden = false;
             return;
         }
-        else if (bio.length > 500){
-            error.innerHTML = 'Bio must be less than 500 characters';
+        else if (bio.length > 250){
+            error.innerHTML = 'Bio must be less than 250 characters';
             error.hidden = false;
             return;
         }
@@ -169,8 +169,8 @@ if(loginform){
         event.preventDefault();
         const username = document.getElementById('username').value.trim();
         const password = document.getElementById('password').value.trim();
-        let error = document.getElementById('loginerror');
-        error.innerHTML = '';
+        let error = document.getElementById('userloginerror');
+        error.textContent = "";
         error.hidden = true;
         if(!username || !password){
             error.innerHTML = 'All fields are required';
