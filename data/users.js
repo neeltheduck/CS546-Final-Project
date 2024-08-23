@@ -187,7 +187,6 @@ export const loginUser = async (username, password) => {
     if (!numCheck || !capsCheck || !specialCheck) {
         throw 'Error: password must contain at least one number, capital letter, AND special character.';
     }
-
     const collectionUser = await users();
     const userCheck = await collectionUser.findOne({ username: username });
 

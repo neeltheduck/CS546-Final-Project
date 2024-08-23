@@ -13,7 +13,7 @@ login form handlebar template
     <h1>Login</h1>
     <div id="error" class="error" hidden></div>
     {{#if hasErrors}}
-        <div class="error">Error: {{error}}</div>
+        <div class="error">{{error}}</div>
     {{/if}}
     <form action="/login" id="signin-form" method="POST">
         <label for="username">Username</label>

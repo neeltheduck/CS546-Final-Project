@@ -103,7 +103,7 @@ router.route('/login').get(async (req, res) => {
         // console.log("Username:", logindata.Username);
         // console.log("Password:", logindata.Password);
     } catch (e) {
-        return res.status(500).render('login', {error: e});
+        return res.status(500).render('login', {hasErrors: true,error: e});
     }
 
     try {
