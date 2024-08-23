@@ -3,7 +3,7 @@ import express from 'express';
 // const router = Router();
 const router = express.Router();
 import { addRating, getRatingsByTool, getRatingsByUser } from '../data/ratings.js';
-console.log("Rating Routes");
+
 router
     .route('/ratings')
     .get(async (req, res) => {

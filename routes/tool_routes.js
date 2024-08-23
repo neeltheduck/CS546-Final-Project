@@ -1,14 +1,14 @@
 import {Router} from 'express';
 const router = Router();
 
-import {addTool} from '../data/tools.js';
-router.route('/tools')
+import {addTool,getTools,getToolWithID,getToolWithName} from '../data/tools.js';
+router.route('/toolsregister')
     .get(async (req, res) => {
         try{
-            res.render('tools', {themePreference: 'dark', title: 'Tools'});
+            res.render('toolsregister', {themePreference: 'dark', title: 'Tools'});
         }
         catch (error) {
-            console.log("tools route error");
+            console.log("toolsregister route get error");
             console.log(error);
             res.status(500).json({error: error.message})
         }
@@ -40,10 +40,40 @@ router.route('/tools')
                 return res.redirect('/login');
             }
         } catch (error) {
-            console.log("tools route error");
+            console.log("toolsregister route post error");
             console.log(error);
             res.status(500).json({error: error.message})
         }
     });
 
+    router.route('/tools')
+    .get(async (req, res) => {
+        try {
+            const toolslists = await getTools();
+            console.log("Toolslists:");
+            console.log(toolslists);
+            res.render('tools', {themePreference: 'dark', tool_name: 'Tools searched', tools: toolslists});
+        } catch (error) {
+            console.log("tools route get error");
+            console.log(error);
+            res.status(500).json({error: error.message});
+        }
+    });
+
+    router.route('/tools/:id')
+    .get(async (req, res) => {
+        try {
+            console.log("req");
+            console.log(req);
+            const tool = await getToolWithID(req.params.id);
+            console.log("Tool:");
+            console.log(tool);
+            res.render('toolbyid', {themePreference: 'dark', tool: tool});
+        } catch (error) {
+            console.log("tool route get error");
+            console.log(error);
+            res.status(500).json({error: error.message});
+        }
+    });
+    
 export default router;

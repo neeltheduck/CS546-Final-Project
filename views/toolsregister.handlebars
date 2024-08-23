@@ -1,0 +1,49 @@
+
+<head>
+    <meta charset="UTF-8">
+    <title>tools</title>
+    <link rel="stylesheet" href="/public/css/styles.css">
+</head>
+
+<body>
+    <h1>tools</h1>
+    <div id="error" class="error" hidden></div>
+    {{#if hasErrors}}
+        <div class="error">Error: {{error}}</div>
+    {{/if}}
+    {{!-- const toolData={
+                toolName: req.body.toolName,
+                description: req.body.description,
+                condition: req.body.condition,
+                userID: req.body.userID,
+                availability: req.body.availability,
+                location: req.body.location,
+                images: req.body.images
+            }; --}}
+    <form action="/toolsregister" id="tool-info" name="tool-info" method="POST">
+            
+            <label for="toolName">Tool Name</label>
+            <input type="text" id="toolName" name="toolName"><br>
+    
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description"><br>
+    
+            <label for="condition">Condition</label>
+            <input type="text" id="condition" name="condition"><br>
+    
+            <label for="userID">User ID</label>
+            <input type="text" id="userID" name="userID"><br>
+    
+            <label for="availability">Availability</label>
+            <input type="text" id="availability" name="availability"><br>
+    
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location"><br>
+    
+            <label for="images">Images</label>
+            <input type="text" id="images" name="images"><br>
+    
+            <button id="submitButton" name="submitButton">Submit</button>
+        </form>
+        <script src="../public/js/client_side_validation.js"></script>
+</body>
