@@ -118,7 +118,12 @@ app.use(express.urlencoded({extended: true}));
 app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 app.post("/toolsregister",  upload.single("image"), async (req, res, next) => {
-  req.body.image=req.file.filename
+  if(req.file){
+    req.body.image=req.file.filename
+  }
+  else{
+    req.body.image=undefined
+  }
     next();
   });
 

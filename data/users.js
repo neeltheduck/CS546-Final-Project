@@ -1,4 +1,5 @@
 import { users } from "../config/mongoCollections.js";
+import {ObjectId} from 'mongodb';
 import bcrypt from "bcryptjs";
 import{      
     checkIsProperString,
@@ -79,9 +80,7 @@ function validateThemePreference(themePreference) {
     }
 }
 
-export const registerUser = async (firstName,lastName,username, password, pronouns, bio, userLocation, themePreference
-
-) => {
+export const registerUser = async (firstName,lastName,username, password, pronouns, bio, userLocation, themePreference) => {
 
     // neel's lab 10 stuff
     // for (let i = 0; i < parameter.length; i++) {
@@ -204,3 +203,29 @@ export const loginUser = async (username, password) => {
     }
 };
 
+export const updateTool = async (userId, tool) => {
+    
+    const userCollection = await users();
+    const updatedInfo = await userCollection.updateOne(
+      {_id: new ObjectId(userId)},
+      {$push: {listedTools: tool}}
+    );
+    if (!updatedInfo) {
+      throw 'could not add tool successfully';
+    }
+
+    
+  };
+
+  const get = async (id) => {
+    checkIsProperString(id)
+    id = id.trim();
+    if (!ObjectId.isValid(id)) throw 'invalid object ID';
+    const userCollection = await users();
+    const user = await userCollection.findOne({_id: new ObjectId(id)});
+    if (user === null){
+      throw 'No user with that id'
+    };
+    user._id = user._id.toString();
+    return user;
+  };

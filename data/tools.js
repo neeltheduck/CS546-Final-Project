@@ -1,14 +1,24 @@
 import { tools } from "../config/mongoCollections.js";
-import {ObjectId, MongoClient, GridFSBucket } from 'mongodb';
+import {ObjectId} from 'mongodb';
 import helper from '../helpers.js';
-import axios from 'axios';
-import multer from 'multer';
-import fs from 'fs'
-import { Readable } from 'stream';
+import * as user from './users.js';
+import{      
+    checkIsProperString,
+    checkIsProperPassword,
+    containsNumbers, 
+} from './../helpers.js'
+
 
 // addTool
-export const addTool = async ({toolName, description, condition, userID, availability, location, image, autocomplete}) => {
+export const addTool = async ({toolName, description, condition, userID, availability, location, image}) => {
     try {
+        toolName=checkIsProperString(toolName,"tool name", 2, 40)
+        description=checkIsProperString(description,"description", 2, 500)
+        condition=checkIsProperString(condition,"condition",null,null, ["Like New","Very Good","Good","Ok","Minor Damage","Some Damage", "Very Damaged"]);
+        if(!image){
+            throw 'Image not provided'
+        }
+        location=checkIsProperString(location,"location",2,40);
         // toolName = await helper.checkString(toolName, 'Tool Name');
         // description = await helper.checkString(description, 'Description');
         // condition = await helper.checkString(condition, 'Condition');
@@ -24,34 +34,33 @@ export const addTool = async ({toolName, description, condition, userID, availab
         // for (let image in images) {
         //     image = await helper.checkString(image, 'Image');
         // }
-        const readableStream = new Readable();
-        readableStream.push(image.buffer);
-        readableStream.push(null);
+
         
         const toolCollection = await tools();
         const dateAdded = new Date().toLocaleDateString();
-        const newTool = {toolName, description, condition, userID, dateAdded, availability, location, images, autocomplete};
+        const newTool = {toolName, description, condition, userID, dateAdded, availability, location, image};
         // console.log("Tool object created.");
         // console.log(newTool);
         // console.log("autocomplete");
         // console.log(autocomplete);
-        const apiKey="AIzaSyB4Xt0XFTeyZZXA_2tCA7i1_nH4cL_v82w";
-        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${autocomplete}&key=${apiKey}`;
-        const response = await axios.get(url);
+        // const apiKey="AIzaSyB4Xt0XFTeyZZXA_2tCA7i1_nH4cL_v82w";
+        // const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${autocomplete}&key=${apiKey}`;
+        // const response = await axios.get(url);
         // console.log("Response from Google API:");
         // console.log(response);
-        const lat = response.data.results[0].geometry.location.lat;
-        const lng = response.data.results[0].geometry.location.lng;
+        // const lat = response.data.results[0].geometry.location.lat;
+        // const lng = response.data.results[0].geometry.location.lng;
         // console.log("lat and long",lat,lng);
-        const toolfound = await toolCollection.findOne({toolName: toolName});
-        if (toolfound) {
-            throw `Error: Tool with name ${toolName} already exists, find a new name.`;
-        }
+        // const toolfound = await toolCollection.findOne({toolName: toolName});
+        // if (toolfound) {
+        //     throw `Error: Tool with name ${toolName} already exists, find a new name.`;
+        // }
         const result = await toolCollection.insertOne(newTool);
         if (!result.acknowledged || !result.insertedId) throw 'Error: Tool could not be inserted into database';
-        console.log("Tool added successfully.");
-        console.log(result);
-        return result;
+        let tool= await getToolWithID(result.insertedId.toString());
+        await user.updateTool(userID,tool)
+        return result
+
     } catch (e) {
         console.log("Error in addTool:");
         console.log(e);

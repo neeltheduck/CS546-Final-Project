@@ -1,7 +1,7 @@
 import {Router} from 'express';
 const router = Router();
 
-import {addTool,getTools,getToolWithID,getToolWithName} from '../data/tools.js';
+import {addTool,getTools,getToolWithID} from '../data/tools.js';
 router.route('/toolsregister')
     .get(async (req, res) => {
         try{
@@ -15,38 +15,25 @@ router.route('/toolsregister')
     })
     .post(async (req, res) => {
         try {
-            // const toolData = req.body;
-            console.log("Tool Data:");
-            console.log(req.body);
-            //toolName, description, condition, userID, availability, location, images
-            // take images and put them in mongodb
             let today = new Date();
             today = today.toISOString().split('T')[0];
-            console.log(today);
-            let currentavailability={
-                lastupdated: today,
-                available:[req.body.d1,req.body.d2,req.body.d3,req.body.d4,req.body.d5]
-            }
+            let available=[req.body.d1,req.body.d2,req.body.d3,req.body.d4,req.body.d5,req.body.d6,req.body.d7]
             const toolData={
                 toolName: req.body.toolName,
                 description: req.body.description,
                 condition: req.body.condition,
-                userID: req.body.userID,
-                availability: currentavailability,
-                location: req.body.location,
-                images: req.body.images,
-                autocomplete: req.body.autocomplete
+                userID: req.session.user._id,
+                availability: available,
+                location: req.body.autocomplete,
+                image: req.body.image,
             };
-            console.log("autocomplete:");
-            console.log(toolData.autocomplete);
-            console.log("ToolData:");
-            console.log(toolData);
+            console.log(toolData)
             let tool = await addTool(toolData); 
             console.log("Tool: output");
-            console.log(tool);
+            // console.log(tool);
             // res.status().json(tool);
             if (tool.acknowledged) {
-                return res.redirect('/login');
+                return res.redirect('/landing');
             }
         } catch (error) {
             console.log("toolsregister route post error");
