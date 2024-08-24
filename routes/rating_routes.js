@@ -21,6 +21,11 @@ router
             // const ratingData = req.body;
             console.log("Rating Data:");
             console.log(req.body);
+            req.body.userID = await helper.checkId(req.body.userID, 'User ID');
+            req.body.toolID = await helper.checkId(req.body.toolID, 'Tool ID');
+            if (isNaN(req.body.rating)) throw 'Error: Rating must be a number';
+            if (req.body.rating < 0 || req.body.rating > 10) throw 'Error: Rating must be a number between 0 and 10';
+            req.body.comment = await helper.checkString(req.body.comment, 'Comment');
             //ratingID, userID, toolID, rating, comment
             const ratingData={
                 userID: req.body.userID,
@@ -50,6 +55,7 @@ router
     .get(async (req, res) => {
         try {
             let toolParameter = req.params.toolID;
+            toolParameter = await helper.checkId(toolParameter, 'Tool ID');
             let ratings = await getRatingsByTool(toolParameter);
             // not sure what to do here, maybe req.json(ratings)
         }
