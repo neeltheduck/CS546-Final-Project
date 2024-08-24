@@ -26,7 +26,8 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
     
     
     <div id="userView">
-    <p id="welcome">Welcome {{this.firstName}} {{this.lastName}}!</p>
+    <p id="welcome">Welcome {{firstName}} {{lastName}}!</p>
+    <h2>User Inormation</h2>
     <p>Username: {{username}}</p>
     <p>Pronouns: {{pronouns}}</p>
     <p>Bio: {{bio}}</p>
@@ -34,6 +35,21 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
 
     <a id="logoutLink" href="/logout">Logout</a>
     </div>
+
+    <h2>Listed Tools</h2>
+    <ul>
+        {{#each listedTools}}
+        <li>
+            <p>Tool Name: {{this.toolName}}</p>
+            <p>Description: {{this.description}}</p>
+            <p>Condition: {{condition}}</p>
+            <p>Location: {{this.location}}</p>
+        </li>
+        {{/each}}
+    </ul>
+
+
+
             <script src="../public/js/client_side_validation.js"></script>
             
 </body>
