@@ -1,0 +1,95 @@
+
+<head>
+    <meta charset="UTF-8">
+    <title>tools</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+</head>
+
+<body>
+    <h1>tools</h1>
+    <div id="error" class="error" hidden></div>
+    {{#if hasErrors}}
+        <div class="error">Error: {{error}}</div>
+    {{/if}}
+    {{!-- const toolData={
+                toolName: req.body.toolName,
+                description: req.body.description,
+                condition: req.body.condition,
+                userID: req.body.userID,
+                availability: req.body.availability,
+                location: req.body.location,
+                images: req.body.images
+            }; --}}
+    <form action="/toolsregister" id="tool-info" name="tool-info" class = "dark" method="POST">
+            
+            <label for="toolName">Tool Name</label>
+            <input type="text" id="toolName" name="toolName"><br>
+    
+            <label for="description">Description</label>
+            <input type="text" id="description" name="description"><br>
+    
+            <label for="condition">Condition</label>
+            <input type="text" id="condition" name="condition"><br>
+    
+            <label for="userID">User ID</label>
+            <input type="text" id="userID" name="userID"><br>
+    
+            <label for="availability">Availability</label>
+            <input type="text" id="availability" name="availability"><br>
+    
+            <label for="location">Location</label>
+            <input type="text" id="location" name="location"><br>
+    
+            <label for="images">Images</label>
+            <input type="text" id="images" name="images"><br>
+
+            <fieldset>
+                <legend>Choose for date availability starting today:</legend>
+
+            <div>
+                <input type="checkbox" id="d1" name="d1" checked />
+                <label for="d1">d1</label>
+            </div>
+            <div>
+                <input type="checkbox" id="d2" name="d2" />
+                <label for="d2">d2</label>
+            </div>
+            <div>
+                <input type="checkbox" id="d3" name="d3" />
+                <label for="d3">d3</label>
+            </div>
+            <div>
+                <input type="checkbox" id="d4" name="d4" />
+                <label for="d4">d4</label>
+            </div>
+            <div>
+                <input type="checkbox" id="d5" name="d5" />
+                <label for="d5">d5</label>
+            </div>
+            </fieldset>
+
+            <label for="autocomplete">Location</label>
+            <input id="autocomplete" type="text" name="autocomplete" placeholder="Enter a location" /><br>
+    
+            <button id="submitButton" name="submitButton">Submit</button>
+        </form><br>
+        <div id="toolregistererror" class="formerror" hidden></div>
+        <script src="../public/js/client_side_validation.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4Xt0XFTeyZZXA_2tCA7i1_nH4cL_v82w&libraries=places"></script>
+        {{!-- <script src="../public/js/autocomplete.js"></script> --}}
+        <script>
+  function initAutocomplete() {
+    // Get the input element
+    var input = document.getElementById('autocomplete');
+    
+    // Initialize the autocomplete object
+    var autocomplete = new google.maps.places.Autocomplete(input);
+    // Optionally, you can add an event listener to handle the place selection
+    
+  }
+
+  // Initialize the autocomplete when the page loads
+  google.maps.event.addDomListener(window, 'load', initAutocomplete);
+</script>
+
+</body>

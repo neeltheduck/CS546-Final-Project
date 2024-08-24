@@ -6,7 +6,7 @@ registration handelbars
 <head>
     <meta charset="UTF-8">
     <title>Register</title>
-    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
 <body>
@@ -21,32 +21,37 @@ registration handelbars
 
         <label for="lastName">Last Name</label>
         <input type="text" id="lastName" name="lastName">
-
+        
         <label for="username">Username</label>
-        <input type="text" id="username" name="username">
+        <input type="text" id="username" name="username"><br>
 
         <label for="password">Password</label>
-        <input type="password" id="password" name="password">
+        <input type="password" id="password" name="password"><br>
 
         <label for="confirmPassword">Confirm Password</label>
-        <input type="password" id="confirmPassword" name="confirmPassword">
+        <input type="password" id="confirmPassword" name="confirmPassword"><br>
 
-        <label for="favoriteQuote">Favorite Quote</label>
-        <input type="text" id="favoriteQuote" name="favoriteQuote">
+        <label for="pronouns">Pronouns</label>
+        <select name="pronouns" id="pronouns">
+            <option value="he/him">He/Him</option>
+            <option value="she/her">She/Her</option>
+            <option value="they/them">They/Them</option>
+        </select><br>
+
+        <label for="bio">Bio</label>
+        <textarea id="bio" name="bio" rows="6" cols="65"></textarea><br><br>
+
+        <label for="userLocation">userLocation</label>
+        <input type="text" id="userLocation" name="userLocation"><br>
 
         <label for="themePreference">Theme Preference</label>
         <select name="themePreference" id="themePreference">
             <option value="light">Light</option>
             <option value="dark">Dark</option>
-        </select>
+        </select><br>
 
-        <label for="role">Role</label>
-        <select name="role" id="role">
-            <option value="admin">Admin</option>
-            <option value="user">User</option>
-        </select>
         <button id="submitButton" name="submitButton">Submit</button>
     </form>
-    <a class="sign" href="/login">Already have an account? Click here to log-in</a>
+    <div id="userregistererror" class="formerror" hidden></div>
             <script src="../public/js/client_side_validation.js"></script>
 </body>

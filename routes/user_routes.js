@@ -1,6 +1,6 @@
 import express from express;
 import {Router} from express;
-
+const router = Router();
 import {getUser, updateUser, deleteUser } from "../data/users.js";
 import {authCheck} from app.js;
 

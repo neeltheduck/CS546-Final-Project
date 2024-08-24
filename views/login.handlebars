@@ -6,14 +6,14 @@ login form handlebar template
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link rel="stylesheet" href="/public/css/styles.css">
+    <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
 <body>
     <h1>Login</h1>
     <div id="error" class="error" hidden></div>
     {{#if hasErrors}}
-        <div class="error">Error: {{error}}</div>
+        <div class="error">{{error}}</div>
     {{/if}}
     <form action="/login" id="signin-form" method="POST">
         <label for="username">Username</label>
@@ -24,6 +24,7 @@ login form handlebar template
 
         <button id="submitButton" name="submitButton">Submit</button>
     </form>
+    <div id="userloginerror" class="formerror" hidden></div>
     <a class="sign" href="/register">Click here to register!</a>
             <script src="../public/js/client_side_validation.js"></script>
 </body>

@@ -1,6 +1,10 @@
 import { users } from "../config/mongoCollections.js";
 import bcrypt from "bcryptjs";
-
+import{      
+    checkIsProperString,
+    checkIsProperPassword,
+    containsNumbers, 
+} from './../helpers.js'
 
 function validateCredentials(username, password) {
     const numbers = '1234567890';
@@ -58,15 +62,15 @@ function validatePronouns(pronouns) {
 
 }
 function validateBio(bio) {
-    if (bio.length > 200) {
+    if (bio.length > 250) {
         throw `Error: Bio must be up to 200 characters long.`
     }
 }
-function validateUserLocation(userLocation) {
-    if (!location.town || !location.state || !location.country) {
-        throw `Error: Location fields must be provided. Example: Hoboken, New Jersey, United States of America`;
-    }
-}
+// function validateUserLocation(userLocation) {
+//     if (!location.town || !location.state || !location.country) {
+//         throw `Error: Location fields must be provided. Example: Hoboken, New Jersey, United States of America`;
+//     }
+// }
 function validateThemePreference(themePreference) {
     themePreference = themePreference.toLowerCase();
 
@@ -75,33 +79,38 @@ function validateThemePreference(themePreference) {
     }
 }
 
-export const registerUser = async ({ username, password, pronouns, bio, userLocation, themePreference
+export const registerUser = async (firstName,lastName,username, password, pronouns, bio, userLocation, themePreference
 
-}) => {
+) => {
 
     // neel's lab 10 stuff
+    // for (let i = 0; i < parameter.length; i++) {
+    //     if (!parameter[i] || parameter[i] === undefined || parameter[i].trim() == '') {
+    //         throw `Error: ${parameterName[i]} must be supplied.`;
+    //     }
+    //     if (typeof parameter[i] != "string") {
+    //         throw `Error: ${parameterName[i]} must be a string.`;
+    //     }
+    // }
 
-    const parameterName = ['username', 'password', 'pronouns', 'bio', 'userLocation', 'themePreference'];
-    const parameter = [username, password, pronouns, bio, userLocation, themePreference];
-
-    for (let i = 0; i < parameter.length; i++) {
-        if (!parameter[i] || parameter[i] === undefined || parameter[i].trim() == '') {
-            throw `Error: ${parameterName[i]} must be supplied.`;
-        }
-        if (typeof parameter[i] != "string") {
-            throw `Error: ${parameterName[i]} must be a string.`;
-        }
-    }
-
+    // throw `Error: ${parameterName[0]} must be supplied.`;
     validateCredentials(username, password);
     validatePronouns(pronouns);
     validateBio(bio);
-    validateUserLocation(userLocation);
-    validateThemePreferences(themePreference);
+    // validateUserLocation(userLocation);
+    validateThemePreference(themePreference);
+    firstName= checkIsProperString(firstName,"First Name", 2, 25);
+    containsNumbers(firstName)
+          
+    lastName=checkIsProperString(lastName,"Last Name", 2, 25);
+    containsNumbers(lastName)
+    userLocation=checkIsProperString(userLocation,"User Location");
+    pronouns=pronouns.toLowerCase()
+    pronouns=checkIsProperString(pronouns,"Pronouns", null,null, ["he/him","they/them","she/her"]);
 
     // roles?
 
-    const saltRounds = 16;
+    const saltRounds = 3;
     const hash = await bcrypt.hash(password, saltRounds);
     const collectionUser = await users();
 
@@ -111,17 +120,26 @@ export const registerUser = async ({ username, password, pronouns, bio, userLoca
     }
 
     const updatedFields = {
+        firstName: firstName,
+        lastName: lastName,
         username: username.toLowerCase(),
         password: hash,
         pronouns: pronouns.toLowerCase(),
         bio: bio,
         userLocation: userLocation,
         themePreference: themePreference.toLowerCase(),
+        listedTools: [],
+        borrowedTools: [],
+        reservationHistory: [],
+        tradeStatuses: [],
+        wishList: []
         // role: role.toLowerCase()
     };
-
+    // console.log("updatedFields");
+    // console.log(updatedFields);
     const update = await collectionUser.insertOne(updatedFields);
-
+    // console.log("update");
+    // console.log(update);
     if (!update) {
         throw 'Error: New user insertion was not successful.';
     }
@@ -169,7 +187,6 @@ export const loginUser = async (username, password) => {
     if (!numCheck || !capsCheck || !specialCheck) {
         throw 'Error: password must contain at least one number, capital letter, AND special character.';
     }
-
     const collectionUser = await users();
     const userCheck = await collectionUser.findOne({ username: username });
 
@@ -182,19 +199,8 @@ export const loginUser = async (username, password) => {
         throw 'Either the username or password is invalid';
     }
     else {
-        return {
-            username: userCheck.username,
-            pronouns: userCheck.pronouns,
-            bio: userCheck.bio,
-            userLocation: userCheck.userLocation,
-            listedTools: userCheck.listedTools,
-            borrowedTools: userCheck.borrowedTools,
-            reservationHistory: userCheck.reservationHistory,
-            tradeStatuses: userCheck.tradeStatuses,
-            wishList: userCheck.wishList,
-      themePreference: userCheck.themePreference, // from the lab, might be good to have
-            role: userCheck.role // from the lab, might be good to have
-        };
+        delete userCheck.password;
+        return userCheck;
     }
 };
 
