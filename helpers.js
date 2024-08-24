@@ -16,8 +16,8 @@ const checkString = async (str, varName) => {
     if (str.length === 0) throw `Error: ${varName} cannot be an empty value`;
 
     // Idk what other constraints to add
-    if ((varName === 'toolName' || varName === 'location') && str.search(/[0-9]/) !== -1) throw `Error: ${varName} cannot contain numbers`;
-    if ((varName === 'description' || varName === 'condition') && str.length < 20) throw `Error: ${varName} must be at least 20 characters long`;
+    if ((varName === 'Tool Name' || varName === 'Location') && str.search(/[0-9]/) !== -1) throw `Error: ${varName} cannot contain numbers`;
+    if ((varName === 'Description' || varName === 'Condition') && str.length < 20) throw `Error: ${varName} must be at least 20 characters long`;
 
     if (varName === 'Username') {
         if (str.length < 5 || str.length > 10) throw `Error: ${varName} must be 5-10 characters long`;
