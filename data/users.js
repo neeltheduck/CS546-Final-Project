@@ -230,7 +230,7 @@ export const updateTool = async (userId, tool) => {
     return user;
   };
 
-  export const getByUserName = async (username) =>{
+  export const getUser = async (username) =>{
     const collectionUser = await users();
 
     return await collectionUser.findOne({ username: username });
