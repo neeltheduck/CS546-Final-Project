@@ -10,7 +10,7 @@ import{
 
 
 // addTool
-export const addTool = async ({toolName, description, condition, userID, availability, location, image}) => {
+export const addTool = async (toolName, description, condition, userID, availability, location, image) => {
     try {
         toolName = await helper.checkString(toolName, 'Tool Name');
         description = await helper.checkString(description, 'Description');

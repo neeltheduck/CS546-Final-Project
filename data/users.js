@@ -217,7 +217,7 @@ export const updateTool = async (userId, tool) => {
     
   };
 
-  const get = async (id) => {
+  export const get = async (id) => {
     checkIsProperString(id)
     id = id.trim();
     if (!ObjectId.isValid(id)) throw 'invalid object ID';
@@ -229,3 +229,9 @@ export const updateTool = async (userId, tool) => {
     user._id = user._id.toString();
     return user;
   };
+
+  export const getByUserName = async (username) =>{
+    const collectionUser = await users();
+
+    return await collectionUser.findOne({ username: username });
+  }

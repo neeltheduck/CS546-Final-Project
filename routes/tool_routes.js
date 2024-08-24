@@ -22,17 +22,14 @@ router.route('/toolsregister')
             req.body.description = await helper.checkString(req.body.description, 'Description');
             req.body.condition = await helper.checkString(req.body.description, 'Condition');
             req.session.user._id = await helper.checkId(req.session.user._id, 'User ID');
-            const toolData = {
-                toolName: req.body.toolName,
-                description: req.body.description,
-                condition: req.body.condition,
-                userID: req.session.user._id,
-                availability: available,
-                location: req.body.autocomplete,
-                image: req.body.image,
-            };
-            console.log(toolData)
-            let tool = await addTool(toolData); 
+            let toolName= req.body.toolName
+            let description= req.body.description
+            let condition= req.body.condition
+            let userID= req.session.user._id
+            let availability= available
+            let location= req.body.autocomplete
+            let image= req.body.image
+            let tool = await addTool(toolName, description, condition, userID, availability, location, image); 
             console.log("Tool: output");
             // console.log(tool);
             // res.status().json(tool);

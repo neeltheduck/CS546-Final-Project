@@ -115,7 +115,7 @@ router.route('/login').get(async (req, res) => {
 router.route('/landing').get(async (req, res) => {
     try {
         console.log('inside landing');
-        return res.render('landing', {title: 'Landing Page'};
+        return res.render('landing', {title: 'Landing Page'});
     } catch (e) {
         return res.status(500).json({error: e});
     }
