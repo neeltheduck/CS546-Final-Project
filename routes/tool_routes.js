@@ -20,13 +20,19 @@ router.route('/toolsregister')
             console.log(req.body);
             //toolName, description, condition, userID, availability, location, images
             // take images and put them in mongodb
-
+            let today = new Date();
+            today = today.toISOString().split('T')[0];
+            console.log(today);
+            let currentavailability={
+                lastupdated: today,
+                available:[req.body.d1,req.body.d2,req.body.d3,req.body.d4,req.body.d5]
+            }
             const toolData={
                 toolName: req.body.toolName,
                 description: req.body.description,
                 condition: req.body.condition,
                 userID: req.body.userID,
-                availability: req.body.availability,
+                availability: currentavailability,
                 location: req.body.location,
                 images: req.body.images,
                 autocomplete: req.body.autocomplete

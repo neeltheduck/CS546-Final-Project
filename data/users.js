@@ -110,7 +110,7 @@ export const registerUser = async (firstName,lastName,username, password, pronou
 
     // roles?
 
-    const saltRounds = 16;
+    const saltRounds = 3;
     const hash = await bcrypt.hash(password, saltRounds);
     const collectionUser = await users();
 

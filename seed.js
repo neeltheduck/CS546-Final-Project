@@ -9,7 +9,7 @@ async function main() {
     await users.registerUser("Patrick","Hill","patrickh","Patrick&1234","He/Him","hi","NYC","dark")
     await users.registerUser("Jey","Joseph","jeyjo","Jey&1234","He/Him","hi","NYC","dark")
 
-    await closeConnection();
+    // await closeConnection();
 
 }
 
