@@ -39,7 +39,7 @@ router.route('/toolsregister')
         } catch (error) {
             console.log("toolsregister route post error");
             console.log(error);
-            res.status(500).json({error: error.message})
+            res.status(500).render('toolsregister', {hasErrors: true, error})
         }
     });
 
