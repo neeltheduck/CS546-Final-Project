@@ -12,18 +12,12 @@ import{
 // addTool
 export const addTool = async ({toolName, description, condition, userID, availability, location, image}) => {
     try {
-        toolName=checkIsProperString(toolName,"tool name", 2, 40)
-        description=checkIsProperString(description,"description", 2, 500)
-        condition=checkIsProperString(condition,"condition",null,null, ["Like New","Very Good","Good","Ok","Minor Damage","Some Damage", "Very Damaged"]);
-        if(!image){
-            throw 'Image not provided'
-        }
-        location=checkIsProperString(location,"location",2,40);
-        // toolName = await helper.checkString(toolName, 'Tool Name');
-        // description = await helper.checkString(description, 'Description');
-        // condition = await helper.checkString(condition, 'Condition');
-        // // userID = await helper.checkId(userID, 'User ID');
-        // location = await helper.checkString(location, 'Location');
+        toolName = await helper.checkString(toolName, 'Tool Name');
+        description = await helper.checkString(description, 'Description');
+        condition = checkIsProperString(condition,"condition",null,null, ["Like New","Very Good","Good","Ok","Minor Damage","Some Damage", "Very Damaged"]);
+        userID = await helper.checkId(userID, 'User ID');
+        location = await helper.checkString(location, 'Location');
+        if (!image) throw 'Error: Image not provided';
 
         // if (!availability) throw 'Error: Availability with a Start and End Date for the tool must be provided';
         // availability.start = await helper.checkDate(availability.start, 'Availability Start Date');
