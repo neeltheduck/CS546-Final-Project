@@ -62,10 +62,17 @@ export const addTool = async (toolName, description, condition, userID, availabi
     }
 }
 
-// getTools
-export const getTools = async () => {
+// getTools 
+export const getAllTools = async () => {
     const toolCollection = await tools();
     let toolList = await toolCollection.find({}).toArray();
+    if (!toolList) throw 'Error: Could not get tool collection';
+    return toolList;
+};
+
+export const searchTools = async (search) => {
+    const toolCollection = await tools();
+    let toolList = await toolCollection.find({ $regex: search, $options: "i" }).toArray();
     if (!toolList) throw 'Error: Could not get tool collection';
     return toolList;
 };

@@ -239,3 +239,89 @@ body.light a.back {
 body.dark a.back {
     color: #ffffff;
 }
+
+/* Container for all tool links */
+.toolsDiv {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between; /* Distribute space between items */
+    gap: 20px;
+    margin: 0 auto;
+    max-width: 100%; /* Use the full width of the container */
+    padding: 0 5%; /* Add padding to control overall container width */
+}
+
+/* Individual tool link */
+.toolLink {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+    box-sizing: border-box;
+    flex: 1 1 calc(30% - 20px); /* Adjusts to three items per row with 15% space between */
+    max-width: 30%;
+    margin-bottom: 20px;
+}
+
+/* Individual tool article */
+.toolArt {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    background-color: #f9f9f9;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    height: 100%; /* Ensures all articles have the same height */
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Tool image styling */
+.toolImage {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+    margin-bottom: 16px;
+}
+
+/* Tool name styling */
+.toolArt h2 {
+    font-size: 1.5em;
+    margin: 16px 0 8px;
+    color: #333;
+}
+
+/* Tool description styling */
+.toolArt h3 {
+    font-size: 1.2em;
+    margin: 8px 0;
+    color: #666;
+}
+
+/* Tool condition styling */
+.toolArt h4 {
+    font-size: 1em;
+    margin: 8px 0;
+    color: #999;
+}
+
+/* Hover effect for the tool article */
+.toolArt:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+    .toolLink {
+        flex: 1 1 calc(45% - 20px); /* Two items per row on medium screens */
+        max-width: 45%;
+    }
+}
+
+@media (max-width: 768px) {
+    .toolLink {
+        flex: 1 1 calc(100% - 20px); /* One item per row on smaller screens */
+        max-width: 100%;
+    }
+}

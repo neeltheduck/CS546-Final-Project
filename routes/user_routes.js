@@ -3,37 +3,20 @@ import {Router} from 'express';
 const router = Router();
 //import {authCheck} from app.js;
 
-import {getUser} from '../data/users.js';
-
 
 // getUser
 router
 .get('/:username', async (req, res) => {
     try {
-        let currentUsername = req.params.username;
+        let currentUsername = req.body.user.username;
         let user = await getUser(currentUsername);
 
         if (!user){
             return res.status(404).send('Sorry! User not found.');
         }
 
-        //res.json(user);
-        res.render('users', {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            username: user.username,
-            pronouns: user.pronouns,
-            bio: user.bio,
-            userLocation: user.userLocation,
-            themePreference: user.themePreference,
-            listedTools: user.listedTools,
-            borrowedTools: user.borrowedTools,
-            reservationHistory: user.reservationHistory,
-            tradeStatuses: user.tradeStatuses,
-            wishList: user.wishList,
-        });
+        res.json(user);
     } catch (error) {
-        console.error('Failed to fetch user:', error); 
         res.status(500).send('Error: Internal Server Error.');
     }
 })

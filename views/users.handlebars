@@ -16,15 +16,6 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
         <a href="/users">Profile</a> 
         <a href="/toolsregister">Manage</a>
     </header>
-
-    <h1>User Profile</h1>
-
-    <div id="error" class="error" hidden></div>
-    {{#if hasErrors}}
-        <div class="error">Error: {{error}}</div>
-    {{/if}}
-    
-    
     <div id="userView">
     <p id="welcome">Welcome {{this.firstName}} {{this.lastName}}!</p>
     <p>Username: {{username}}</p>
@@ -35,5 +26,4 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
     <a id="logoutLink" href="/logout">Logout</a>
     </div>
             <script src="../public/js/client_side_validation.js"></script>
-            
 </body>
