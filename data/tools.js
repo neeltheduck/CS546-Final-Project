@@ -60,7 +60,7 @@ export const addTool = async (toolName, description, condition, userID, availabi
     } catch (e) {
         console.log("Error in addTool:");
         console.log(e);
-        throw `Error: Tool was not successfully added.`;
+        throw `${e}. Tool was not successfully added.`;
     }
 }
 
