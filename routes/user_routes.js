@@ -1,15 +1,14 @@
-import express from express;
-import {Router} from express;
+import express from 'express';
+import {Router} from 'express';
 const router = Router();
-import {getUser, updateUser, deleteUser } from "../data/users.js";
-import {authCheck} from app.js;
+//import {authCheck} from app.js;
 
 
 // getUser
 router
-.get('/:username', authCheck, async (req, res) => {
+.get('/:username', async (req, res) => {
     try {
-        let currentUsername = req.params.username;
+        let currentUsername = req.body.user.username;
         let user = await getUser(currentUsername);
 
         if (!user){
@@ -27,7 +26,7 @@ router
 // deleteUser
 
 router.
-delete('/delete/:username', authCheck, async (req, res) => {
+delete('/delete/:username', async (req, res) => {
     try {
         let currentUsername = req.params.username;
         await deleteUser(currentUsername);
@@ -41,3 +40,5 @@ delete('/delete/:username', authCheck, async (req, res) => {
 });
 
 export default router;
+
+// create middleware for /users so that it redirects to /:username

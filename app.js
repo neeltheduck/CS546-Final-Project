@@ -98,16 +98,18 @@ const upload = multer({ storage: storage });
 //     next();
 //   });
 
-// //6
-// app.use('/logout', async (req, res, next) => {
+//6
+app.use('/users', async (req, res, next) => {
+  if (req.method == 'GET') {
+          if (req.session.user) {
+              return res.redirect('/' + req.session.user.username);
+          }
+          
+  }
+  next();
 
-//     if (req.method == 'GET') {
-//             if (!req.session.user) {
-//                 return res.redirect('/login');
-//             }
-//     }
-//     next();
-//   });
+});
+
 
 
 //---------------------------------------------------------------------
