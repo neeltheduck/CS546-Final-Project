@@ -1,9 +1,13 @@
 import { tools } from "../config/mongoCollections.js";
-import {ObjectId} from 'mongodb';
+import {ObjectId, MongoClient, GridFSBucket } from 'mongodb';
 import helper from '../helpers.js';
 import axios from 'axios';
+import multer from 'multer';
+import fs from 'fs'
+import { Readable } from 'stream';
+
 // addTool
-export const addTool = async ({toolName, description, condition, userID, availability, location, images, autocomplete}) => {
+export const addTool = async ({toolName, description, condition, userID, availability, location, image, autocomplete}) => {
     try {
         // toolName = await helper.checkString(toolName, 'Tool Name');
         // description = await helper.checkString(description, 'Description');
@@ -20,6 +24,9 @@ export const addTool = async ({toolName, description, condition, userID, availab
         // for (let image in images) {
         //     image = await helper.checkString(image, 'Image');
         // }
+        const readableStream = new Readable();
+        readableStream.push(image.buffer);
+        readableStream.push(null);
         
         const toolCollection = await tools();
         const dateAdded = new Date().toLocaleDateString();
