@@ -1,9 +1,9 @@
 import { tools } from "../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import helper from '../helpers.js';
-
+import axios from 'axios';
 // addTool
-export const addTool = async ({toolName, description, condition, userID, availability, location, images}) => {
+export const addTool = async ({toolName, description, condition, userID, availability, location, images, autocomplete}) => {
     try {
         // toolName = await helper.checkString(toolName, 'Tool Name');
         // description = await helper.checkString(description, 'Description');
@@ -23,9 +23,19 @@ export const addTool = async ({toolName, description, condition, userID, availab
         
         const toolCollection = await tools();
         const dateAdded = new Date().toLocaleDateString();
-        const newTool = {toolName, description, condition, userID, dateAdded, availability, location, images};
-        console.log("Tool object created.");
-        console.log(newTool);
+        const newTool = {toolName, description, condition, userID, dateAdded, availability, location, images, autocomplete};
+        // console.log("Tool object created.");
+        // console.log(newTool);
+        // console.log("autocomplete");
+        // console.log(autocomplete);
+        const apiKey="AIzaSyB4Xt0XFTeyZZXA_2tCA7i1_nH4cL_v82w";
+        const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${autocomplete}&key=${apiKey}`;
+        const response = await axios.get(url);
+        // console.log("Response from Google API:");
+        // console.log(response);
+        const lat = response.data.results[0].geometry.location.lat;
+        const lng = response.data.results[0].geometry.location.lng;
+        // console.log("lat and long",lat,lng);
         const toolfound = await toolCollection.findOne({toolName: toolName});
         if (toolfound) {
             throw `Error: Tool with name ${toolName} already exists, find a new name.`;
@@ -70,7 +80,7 @@ export const getToolWithName = async (toolName) => {
 };
 // updateTool
 export const updateTool = async ({toolID, toolName, description, condition, userID, dateAdded, availability, location, images}) => {
-    toolID = await checkId(toolID, 'Tool ID');
+    toolID = await helper.checkId(toolID, 'Tool ID');
     toolName = await helper.checkString(toolName, 'Tool Name');
     description  = await helper.checkString(description, 'Description');
     condition = await helper.checkString(condition, 'Condition');

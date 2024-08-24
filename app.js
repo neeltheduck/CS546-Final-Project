@@ -3,6 +3,7 @@ const app = express();
 import configRoutes from './routes/index.js';
 import exphbs from 'express-handlebars';
 import session from 'express-session';
+import{main} from "./seed.js"
 
 app.use(session({
   name: 'AuthenticationState',
@@ -108,6 +109,11 @@ app.engine('handlebars', exphbs.engine({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
 configRoutes(app);
+
+//comment this out if DB is already filled with filler data
+console.log("please hold while seed file loads")
+await main();
+console.log("done loading seed!")
 
 app.listen(3000, () => {
   console.log("We've now got a server!");

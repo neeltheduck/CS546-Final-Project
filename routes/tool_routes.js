@@ -28,8 +28,11 @@ router.route('/toolsregister')
                 userID: req.body.userID,
                 availability: req.body.availability,
                 location: req.body.location,
-                images: req.body.images
+                images: req.body.images,
+                autocomplete: req.body.autocomplete
             };
+            console.log("autocomplete:");
+            console.log(toolData.autocomplete);
             console.log("ToolData:");
             console.log(toolData);
             let tool = await addTool(toolData); 
