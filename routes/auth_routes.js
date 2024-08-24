@@ -32,37 +32,26 @@ router.route('/register').get(async (req, res) => {
         let pronouns=req.body.pronouns
         let confirmPassword=req.body.confirmPassword
         let userLocation= req.body.userLocation
-        try{
-            firstName= checkIsProperString(firstName,"First Name", 2, 25);
-            containsNumbers(firstName)
-          
-            lastName=checkIsProperString(lastName,"Last Name", 2, 25);
-            containsNumbers(lastName)
-          
-            username=checkIsProperString(username,"Username", 5, 10);
-            containsNumbers(username)
-            username=username.toLowerCase()
-          
-            password=checkIsProperPassword(password,"Password",8)
-            confirmPassword=checkIsProperPassword(confirmPassword,"Confirmation password",8)
-            if(password !== confirmPassword){
-              throw "Password does not match confirmation password"
-            }
-          
-            bio=checkIsProperString(bio,"Bio", null, 250);
-            userLocation=checkIsProperString(userLocation,"User Location");
-          
-            themePreference=themePreference.toLowerCase()
-            themePreference=checkIsProperString(themePreference,"Theme Preference", null,null, ["light","dark"]);
-
-            pronouns=pronouns.toLowerCase()
-            pronouns=checkIsProperString(pronouns,"Pronouns", null,null, ["he/him","they/them","she/her"]);
+        
+        try {
+            firstName = await helper.checkString(firstName, "First Name");
+            lastName = await helper.checkString(lastName, "Last Name");
+            username = await helper.checkString(username, "Username");
+            password = await helper.checkString(password, "Password");
+            confirmPassword = await helper.checkString(confirmPassword, "Confirm Password");
+            if (password !== confirmPassword) throw "Error: Password does not match confirmation password";
+            bio = await helper.checkString(bio, "Bio");
+            userLocation = await helper.checkString(userLocation, "Location");
+            themePreference = await helper.checkString(themePreference, "Theme Preference");
+            pronouns = await helper.checkString(pronouns, "Pronouns");
           } catch (e) {
                 req.method='GET'
                 return res.status(400).render('register',{hasErrors: true,error: e});
           }
+        
           let register
-          try{
+        
+          try {
             register = await registerUser(
               firstName,
               lastName,
@@ -74,16 +63,16 @@ router.route('/register').get(async (req, res) => {
         } catch (e) {
             req.method='GET'
             return res.status(400).render('register',{hasErrors: true,error: e});
-          }
+        }
         
-            if (register.signupCompleted){
-              req.method='GET'
-              return res.redirect('/login');
-            }
-            else{
-              req.method='GET'
-              return res.status(500).render('register',{hasErrors: true, error: "Internal Servive Error"});
-            }});
+        if (register.signupCompleted){
+            req.method='GET'
+            return res.redirect('/login');
+        } else {
+            req.method='GET'
+            return res.status(500).render('register',{hasErrors: true, error: "Internal Servive Error"});
+        }
+    });
 
 router.route('/login').get(async (req, res) => {
     //code here for GET
@@ -122,5 +111,14 @@ router.route('/login').get(async (req, res) => {
     }
 
     });
+
+router.route('/landing').get(async (req, res) => {
+    try {
+        console.log('inside landing');
+        return res.render('landing', {title: 'Landing Page'};
+    } catch (e) {
+        return res.status(500).json({error: e});
+    }
+});
 
     export default router;
