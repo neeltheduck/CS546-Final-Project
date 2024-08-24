@@ -17,8 +17,12 @@ router.route('/toolsregister')
         try {
             let today = new Date();
             today = today.toISOString().split('T')[0];
-            let available=[req.body.d1,req.body.d2,req.body.d3,req.body.d4,req.body.d5,req.body.d6,req.body.d7]
-            const toolData={
+            let available=[req.body.d1,req.body.d2,req.body.d3,req.body.d4,req.body.d5,req.body.d6,req.body.d7];
+            req.body.toolName = await helper.checkString(req.body.toolName, 'Tool Name');
+            req.body.description = await helper.checkString(req.body.description, 'Description');
+            req.body.condition = await helper.checkString(req.body.description, 'Condition');
+            req.session.user._id = await helper.checkId(req.session.user._id, 'User ID');
+            const toolData = {
                 toolName: req.body.toolName,
                 description: req.body.description,
                 condition: req.body.condition,
