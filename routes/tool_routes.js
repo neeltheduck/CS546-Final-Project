@@ -7,6 +7,7 @@ import{
     containsNumbers, 
 } from './../helpers.js'
 import {addTool,getAllTools,getToolWithID,deleteTool,updateTool, getToolWithUserID,searchTools} from '../data/tools.js';
+import {toolRequested} from '../data/users.js';
 
 router.route('/lenderportalpage')
     .get(async (req, res) => {
@@ -132,20 +133,21 @@ router.route('/toolsregister')
     })
     .post(async (req, res) => {
         try {
-            let today = new Date();
-            today = today.toISOString().split('T')[0];
-            let available=[req.body.d1,req.body.d2,req.body.d3,req.body.d4,req.body.d5,req.body.d6,req.body.d7];
-            req.body.toolName = await helper.checkString(req.body.toolName, 'Tool Name');
-            req.body.description = await helper.checkString(req.body.description, 'Description');
-            req.body.condition = await helper.checkString(req.body.condition, 'Condition');
-            req.session.user._id = await helper.checkId(req.session.user._id, 'User ID');
-            let toolName= req.body.toolName
-            let description= req.body.description
-            let condition= req.body.condition
-            let userID= req.session.user._id
-            let availability= available
-            let location= req.body.autocomplete
-            let image= req.body.image
+            let toolName= req.body.toolName;
+            let description= req.body.description;
+            let condition= req.body.condition;
+            let userID= req.session.user._id;
+            let availability={start: new Date(req.body.start_date), end: new Date(req.body.end_date)};
+            let location= req.body.autocomplete;
+            let image= req.body.image;
+            console.log(availability);
+            toolName = await helper.checkString(toolName, 'Tool Name');
+            description = await helper.checkString(description, 'Description');
+            condition = await helper.checkString(condition, 'Condition');
+            userID = await helper.checkId(userID, 'User ID');
+            availability.start = await helper.checkDate(availability.start, 'Start Date');
+            availability.end = await helper.checkDate(availability.end, 'End Date');
+            if (availability.start.getTime() > availability.end.getTime()) throw 'Error: Start Date must come before End Date';
             let tool = await addTool(toolName, description, condition, userID, availability, location, image); 
             console.log("Tool: output");
             // console.log(tool);
@@ -190,12 +192,37 @@ router.route('/tools/:id')
             const tool = await getToolWithID(req.params.id);
             console.log("Tool:");
             console.log(tool);
-            res.render('toolbyid', {themePreference: 'dark', tool: tool});
+            let start = tool.availability.start.toISOString().split('T');
+            let end = tool.availability.end.toISOString().split('T');
+            res.render('toolbyid', {themePreference: 'dark', tool: tool, start: start[0], end: end[0]});
         } catch (error) {
             console.log("tool route get error");
             console.log(error);
             res.status(500).json({error: error.message});
         }
+    })
+.post(async (req, res) => {
+        let req_username = req.body.req_username;
+        let lender_id = req.body.lender_id;
+        let tool_id = req.body.tool_id;
+        let start_date = req.body.start_date;
+        let end_date = req.body.end_date;
+        try {
+            req_username = await helper.checkString(req_username, 'Username');
+            lender_id = await helper.checkId(lender_id, 'User ID');
+            tool_id = await helper.checkId(tool_id, 'Tool ID');
+            start_date = await helper.checkDate(new Date(start_date), 'Start Date');
+            end_date = await helper.checkDate(new Date(end_date), 'End Date');
+            let result = await toolRequested(lender_id, req_username, tool_id, start_date, end_date, 'pending');
+            if (!result) return res.status(500).render('toolbyid', {hasErrors: true, error: 'Error: Could not request tool'});
+            const tool = await getToolWithID(tool_id);
+            if (!tool) return res.status(500).render('toolbyid', {hasErrors: true, error: "Error: Could not get tool"});
+            let start = tool.availability.start.toISOString().split('T');
+            let end = tool.availability.end.toISOString().split('T');
+            return res.render('toolbyid', {themePreference: req.session.user.themePreference, tool: tool, start: start[0], end: end[0], reqSuccess: true});
+        } catch (e) {
+            return res.status(500).render('toolbyid', {hasErrors: true, error: e});
+        } 
     });
     
 export default router;
