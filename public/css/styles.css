@@ -239,6 +239,25 @@ body.light a.back {
 body.dark a.back {
     color: #ffffff;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .scroll-container {
     display: grid;
     gap: 5%;
@@ -268,8 +287,12 @@ body.dark a.back {
     display: block;
     box-sizing: border-box;
     flex: 1 1 calc(30% - 20px); /* Adjusts to three items per row with 15% space between */
-    max-width: 100%;
+    max-width: 30%;
     margin-bottom: 20px;
+}
+
+.scroll-container .toolLink{
+    max-width: 100%;
 }
 
 /* Individual tool article */
@@ -286,6 +309,11 @@ body.dark a.back {
     justify-content: space-between;
 }
 
+body.light .toolArt{
+    border: 1px solid rgb(34,34,34);
+    background-color: rgb(6,6,6);
+}
+
 /* Tool image styling */
 .toolImage {
     width: 100%;
@@ -298,21 +326,43 @@ body.dark a.back {
 .toolArt h2 {
     font-size: 1.5em;
     margin: 16px 0 8px;
-    color: #333;
+    color: #000;
 }
 
 /* Tool description styling */
 .toolArt h3 {
     font-size: 1.2em;
     margin: 8px 0;
-    color: #666;
+    color: #333;
 }
 
 /* Tool condition styling */
 .toolArt h4 {
     font-size: 1em;
     margin: 8px 0;
-    color: #999;
+    color: #666;
+}
+
+/* Tool name styling */
+body.light .toolArt h2 {
+    font-size: 1.5em;
+    margin: 16px 0 8px;
+    
+    color: rgb(255,255,255);
+}
+
+/* Tool description styling */
+body.light .toolArt h3 {
+    font-size: 1.2em;
+    margin: 8px 0;
+    color: rgb(204,204,204);
+}
+
+/* Tool condition styling */
+body.light .toolArt h4 {
+    font-size: 1em;
+    margin: 8px 0;
+    color: rgb(153,153,153);
 }
 
 /* Hover effect for the tool article */

@@ -12,7 +12,7 @@ router.route('/lenderportalpage')
     .get(async (req, res) => {
         try{
             const toolslists = await getToolWithUserID(req.session.user._id);
-            res.render('lenderportalpage', {themePreference: 'dark', title: 'Lender Portal', tools:toolslists});
+            res.render('lenderportalpage', {themePreference: req.session.user.themePreference, title: 'Lender Portal', tools:toolslists});
         }
         catch (error) {
             console.log("lenderportalpage route error");

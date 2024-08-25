@@ -13,7 +13,7 @@ async function main() {
     let kashish = await users.getByUserName("kashishp")
     await users.registerUser("Patrick","Hill","patrickh","Patrick&1234","He/Him","hi","NYC","dark")
     let patrick = await users.getByUserName("patrickh")
-    await users.registerUser("Jey","Joseph","jeyjo","Jey&1234","He/Him","hi","NYC","dark")
+    await users.registerUser("Jey","Joseph","jeyjo","Jey&1234","He/Him","hi","NYC","light")
     let jey = await users.getByUserName("jeyjo")
     await tools.addTool("Pie","very delicious pie", "Some Damage", adib._id.toString(), ["on",undefined,"on",undefined,"on",undefined,undefined], "Hoboken, NJ, USA","1724515479000.jpeg")
     await tools.addTool("Teddy","very fluffy teady bear", "Ok", neel._id.toString(), ["on",undefined,"on",undefined,"on",undefined,"on"], "Hoboken, NJ, USA","1724515479001.png")
