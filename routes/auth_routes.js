@@ -124,4 +124,9 @@ router.route('/landing').get(async (req, res) => {
     }
 });
 
+router.route('/logout').get(async (req, res) => {
+    req.session.destroy();
+    res.render('logout');
+  });
+
     export default router;
