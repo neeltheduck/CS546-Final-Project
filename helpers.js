@@ -15,7 +15,7 @@ const checkString = async (str, varName) => {
     str = str.trim();
     if (str.length === 0) throw `Error: ${varName} cannot be an empty value`;
 
-     if (varName === 'Tool Name') {
+     if (varName === 'Tool Name' || varName === 'Location') {
         if (str.search(/[0-9]/) !== -1) throw `Error: ${varName} cannot contain numbers`;
         if (str.length < 2 || str.length > 40) throw `Error: ${varName} must be between 2 and 40 characters long`;
     }
@@ -25,10 +25,6 @@ const checkString = async (str, varName) => {
     if (varName === 'Username') {
         if (str.length < 5 || str.length > 10) throw `Error: ${varName} must be 5-10 characters long`;
         if (str.search(/[0-9]/) !== -1) throw `Error: ${varName} cannot contain numbers`;
-    }
-
-    if (varName === 'Location') {
-        if (str.length < 2 || str.length > 100) throw `Error: ${varName} must be 2-100 characters long`;
     }
 
     if (varName === 'Password' || varName === 'Confirm Password') {

@@ -19,22 +19,20 @@ export const addTool = async (toolName, description, condition, userID, availabi
         location = await helper.checkString(location, 'Location');
         if (!image) throw 'Error: Image not provided';
 
-        let dates = [];
-        for (let i = 0; i < availability.length; i++) {
-            if (availability[i] === 'on') {
-                if (i === 0) dates.push('Sunday');
-                if (i === 1) dates.push('Monday');
-                if (i === 2) dates.push('Tuesday');
-                if (i === 3) dates.push('Wednesday');
-                if (i === 4) dates.push('Thursday');
-                if (i === 5) dates.push('Friday');
-                if (i === 6) dates.push('Saturday');
-            }
-        }
+        // if (!availability) throw 'Error: Availability with a Start and End Date for the tool must be provided';
+        // availability.start = await helper.checkDate(availability.start, 'Availability Start Date');
+        // availability.end = await helper.checkDate(availability.end, 'Availability End Date');
+
+        // if (!images) throw 'Error: Images must be provided';
+        // if (!images.isArray()) throw 'Error: Images must be an array of tool images';
+        // for (let image in images) {
+        //     image = await helper.checkString(image, 'Image');
+        // }
+
         
         const toolCollection = await tools();
         const dateAdded = new Date().toLocaleDateString();
-        const newTool = {toolName, description, condition, userID, dateAdded, availability: dates, location, image};
+        const newTool = {toolName, description, condition, userID, dateAdded, availability, location, image};
         // console.log("Tool object created.");
         // console.log(newTool);
         // console.log("autocomplete");
@@ -60,12 +58,12 @@ export const addTool = async (toolName, description, condition, userID, availabi
     } catch (e) {
         console.log("Error in addTool:");
         console.log(e);
-        throw `${e}. Tool was not successfully added.`;
+        throw `Error: Tool was not successfully added.`;
     }
 }
 
-// getTools 
-export const getAllTools = async () => {
+// getTools
+export const getTools = async () => {
     const toolCollection = await tools();
     let toolList = await toolCollection.find({}).toArray();
     if (!toolList) throw 'Error: Could not get tool collection';

@@ -1,5 +1,4 @@
 import {registerUser, loginUser} from '../data/users.js';
-import {addTool,getAllTools,getToolWithID} from '../data/tools.js';
 import{      
     checkIsProperString,
     checkIsProperPassword,
@@ -115,10 +114,8 @@ router.route('/login').get(async (req, res) => {
 
 router.route('/landing').get(async (req, res) => {
     try {
-        let tools=await getAllTools()
-        tools.reverse();
         console.log('inside landing');
-        return res.render('landing', {title: 'Home', tools: tools});
+        return res.render('landing', {title: 'Landing Page'});
     } catch (e) {
         return res.status(500).json({error: e});
     }

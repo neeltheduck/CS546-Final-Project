@@ -16,7 +16,7 @@ async function main() {
     await users.registerUser("Jey","Joseph","jeyjo","Jey&1234","He/Him","hi","NYC","dark")
     let jey = await users.getByUserName("jeyjo")
     await tools.addTool("Pie","very delicious pie", "Some Damage", adib._id.toString(), ["on",undefined,"on",undefined,"on",undefined,undefined], "Hoboken, NJ, USA","1724515479000.jpeg")
-    await tools.addTool("Teddy","very fluffy teady bear", "Ok", neel._id.toString(), ["on",undefined,"on",undefined,"on",undefined,"on"], "Hoboken, NJ, USA","1724515479001.png")
+    await tools.addTool("Teddy","very fluffy teady bear", "Ok", neel._id.toString(), ["on",undefined,"on",undefined,"on",undefined,"on"], "Hoboken, NJ, USA","1724515479001.jpeg")
     await tools.addTool("Firetruck","big red firetruck", "Like New", tara._id.toString(), ["on",undefined,undefined,undefined,"on",undefined,undefined], "Hoboken, NJ, USA","1724515479002.jpeg")
     await tools.addTool("Ambulance","super safe ambulance", "Very Damaged", kashish._id.toString(), [undefined,undefined,"on",undefined,undefined,undefined,undefined], "Hoboken, NJ, USA","1724515479003.jpeg")
     await tools.addTool("Police car","fast and furious ride", "Good", patrick._id.toString(), [undefined,undefined,"on",undefined,"on",undefined,undefined], "Hoboken, NJ, USA","1724515479004.jpeg")
