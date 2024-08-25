@@ -50,7 +50,7 @@ textarea{
     margin-top: 3em;
 }
 
-h1 {
+h1{
     color: #333;
     text-align: center;
     margin-top: 20px;
@@ -240,6 +240,23 @@ body.dark a.back {
     color: #ffffff;
 }
 
+body.light .greeting h1,  body.light .greeting h3, body.light .greeting h2{
+    color: #000000;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    text-align: center;      /* Center text inside the greeting */
+
+}
+body.dark .greeting h1,  body.dark .greeting h3, body.dark .greeting h2 {
+    color: #ffffff;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    text-align: center;      /* Center text inside the greeting */
+
+
+}
 
 
 

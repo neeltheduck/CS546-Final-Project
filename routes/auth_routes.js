@@ -117,6 +117,7 @@ router.route('/landing').get(async (req, res) => {
     try {
         let tools=await getAllTools()
         tools.reverse();
+        tools=tools.slice(0, Math.min(20, tools.length));
         return res.render('landing', {title: 'Home', tools: tools, themePreference: req.session.user.themePreference});
     } catch (e) {
         return res.status(500).json({error: e});
