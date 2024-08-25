@@ -4,7 +4,7 @@
     <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
-<body>
+<body class="{{theme}}">
     <header class="header" id="header">  
         <a href="/landing">Home</a>  
         <a href="/tools">Search</a>
@@ -13,21 +13,21 @@
     </header>
 
 <h1>tools list</h1>
-<h2>you searched for:  {{tool_name}}</h2>
+    <form id="searchForm">
+        <label for="search_term"></label>
+        <input id="search_term" type="text">
+        <button type="submit">Search</button>
+    </form>
 
+    <div id="error" class="error" hidden></div>
+        <div class="toolsSearchedPage" id="toolsSearchedPage" hidden>
 
-{{#if tools.length}}
-    <ol>
-        {{#each tools}}
-            <li>
-                <a href="/tools/{{_id}}">
-                {{this.toolName}} <br>
-                </a>
-                 {{this._id}} description {{this.description}} - {{this.condition}} - {{this.availability}} - {{this.location}} - {{this.images}}
-            </li>
-        {{/each}}
-    </ol>
-{{else}}
-    <p>No tools found.</p>
-{{/if}}
+        <h2 id="toolSearched"></h2>
+    <div class="toolsDiv" id="toolsDiv" ></div>
+                    
+        </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.4.js"
+    integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+    <script src="../public/js/client_side_validation.js"></script>
 </body>

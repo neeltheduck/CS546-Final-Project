@@ -193,3 +193,79 @@
 //         }
 //     });
 // }
+
+let searchForm = $('#searchForm');
+let searchInput = $('#search_term');
+
+searchForm.submit(function (event) {
+    event.preventDefault();
+    
+    let search = searchInput.val();
+    let toolSearchedPage=document.getElementById("toolsSearchedPage")
+    let err=document.getElementById('error')
+    err.hidden=true
+    toolSearchedPage.hidden=true
+
+    try {
+        if (!search) {
+            throw 'Search not provided.';
+        }
+
+        if (typeof search !== 'string') {
+            throw 'Error: search must be a string';
+        }
+
+        if (search.trim().length === 0) {
+            throw 'Error: search cannot be an empty string or just spaces';
+        }
+
+        search = search.trim();
+        $.ajax({
+            method: 'POST',
+            url: `/tools`,
+            data: { search: search },
+        }).then(function (responsePage1) {
+            displayFunc(responsePage1)
+        });
+    }
+    catch (e) {
+        err.hidden=false
+        toolSearchedPage.hidden=true
+        err.textContent=e
+    }
+
+});
+
+function displayFunc(responsePage1) {
+
+    let toolSearched = document.getElementById('toolSearched');
+    let listTools = document.getElementById('toolsDiv');
+    let toolSearchedPage=document.getElementById('toolsSearchedPage')
+    let err=document.getElementById('error')
+    err.hidden=true
+    toolSearchedPage.hidden=true
+    if(responsePage1.success){
+        err.hidden=true
+        toolSearchedPage.hidden=false
+    let tools=responsePage1.tools;
+    toolSearched.textContent="You searched for: "+responsePage1.search
+    let text=""
+    for(let tool of tools){
+        text=text+"    <a href='/tools/"+tool._id+"' class='toolLink'>\
+    <article class='toolArt'>\
+        <img class='toolImage' alt='"+tool.toolName+" image' src='public/uploads/"+tool.image+"'> <br> <h2>"+tool.toolName+"</h2> <br> <h3>"+tool.description+"</h3> <h4>condition: "+tool.condition+"</h4>\
+    </article>\
+    </a>"
+
+    } 
+    listTools.innerHTML=text
+}
+else{
+    err.hidden=false
+    toolSearchedPage.hidden=true
+    err.textContent=responsePage1.error
+}
+    
+
+
+}

@@ -1,8 +1,12 @@
 import {Router} from 'express';
 const router = Router();
 import helper from '../helpers.js';
-
-import {addTool,getAllTools,getToolWithID,deleteTool,updateTool, getToolWithUserID} from '../data/tools.js';
+import{      
+    checkIsProperString,
+    checkIsProperPassword,
+    containsNumbers, 
+} from './../helpers.js'
+import {addTool,getAllTools,getToolWithID,deleteTool,updateTool, getToolWithUserID,searchTools} from '../data/tools.js';
 
 router.route('/lenderportalpage')
     .get(async (req, res) => {
@@ -114,6 +118,7 @@ router.route('/toolsedit/:id')
             res.status(500).json({error: error.message})
         }
     });
+    
 router.route('/toolsregister')
     .get(async (req, res) => {
         try{
@@ -155,19 +160,29 @@ router.route('/toolsregister')
         }
     });
 
-    router.route('/tools')
+router.route('/tools')
     .get(async (req, res) => {
         try {
-            const toolslists = await getAllTools();
-            res.render('tools', {themePreference: 'dark', tool_name: 'Tools searched', tools: toolslists});
+            res.render('tools', {theme: req.session.user.themePreference});
         } catch (error) {
             console.log("tools route get error");
             console.log(error);
             res.status(500).json({error: error.message});
         }
+    })
+    .post(async (req, res) => {
+        try{
+            let search=req.body.search
+            search= checkIsProperString(search,"Search")
+
+        let tools=await searchTools(search)
+        res.json({success: true, tools: tools, search: search});
+        }catch(e){
+            res.json({success: false, error: e});
+        }
     });
 
-    router.route('/tools/:id')
+router.route('/tools/:id')
     .get(async (req, res) => {
         try {
             console.log("req");

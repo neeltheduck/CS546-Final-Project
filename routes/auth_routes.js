@@ -117,7 +117,6 @@ router.route('/landing').get(async (req, res) => {
     try {
         let tools=await getAllTools()
         tools.reverse();
-        console.log('inside landing');
         return res.render('landing', {title: 'Home', tools: tools});
     } catch (e) {
         return res.status(500).json({error: e});
