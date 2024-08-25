@@ -111,6 +111,7 @@ router.route('/login').get(async (req, res) => {
         console.log("User:");
         console.log(user);
         if (user){
+            req.session.user=user
             console.log("User Logged In");
             return     res.redirect('/landing');
         } else {

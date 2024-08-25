@@ -10,6 +10,12 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
     <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 <body class="{{themePreference}}">
+    <header class="header" id="header">  
+        <a href="/landing">Home</a>  
+        <a href="/tools">Search</a>
+        <a href="/users">Profile</a> 
+        <a href="/toolsregister">Manage</a>
+    </header>
     <div id="userView">
     <p id="welcome">Welcome {{firstName}} {{lastName}}, the time is now: {{currentTime}}. Your role in the system is: {{role}}.</p>
     <p id="quote">Favorite Quote: {{favoriteQuote}}</p>
