@@ -2,28 +2,24 @@ import { ratings } from "../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import { dbConnection } from "../config/mongoConnection.js";
 
-export const addRating = async ({userID, toolID, rating, comment}) => {
+export const addRating = async (userID, ratingID, rating, comment) => {
     try {
-        // apparently js has Rating stuff built in. nice
-        // just used my code, need to change it to usebuild in one --Kp
         const ratingCollection = await ratings();
-        // console.log(newRating);
-        const date = new Date().toLocaleDateString();;
-        const newRating = {userID, toolID, rating, comment, date};
-        // let newRating = new Rating({ratingID, userID, toolID, rating, comment});
-        // await newRating.save();
-        console.log("Rating object created.");
-        console.log(newRating);
+        const dateAdded = new Date().toLocaleDateString();
+        const newRating = {userID, ratingID, rating, comment};
         const result = await ratingCollection.insertOne(newRating);
-        // await newRating.save();
-        console.log("Rating added successfully.");
-        console.log(result);
-        return result;
+
+        if (!result.acknowledged || !result.insertedId) throw 'Error: Rating could not be inserted into database';
+        return result.insertedId.toString();
+
     } catch (e) {
+        console.log("Error in addRating:");
         console.log(e);
         throw `Error: Rating was not successfully added.`;
     }
 }
+
+
 
 export const getRatingsByTool = async (toolID) => {
     // to do

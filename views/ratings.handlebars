@@ -5,7 +5,7 @@
     <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
-<body>
+<body class="{{theme}}">
     <header class="header" id="header">  
         <a href="/landing">Home</a>  
         <a href="/tools">Search</a>
@@ -24,19 +24,22 @@
                 rating: req.body.rating,
                 comment: req.body.comment
             }; --}}
-    <form action="/ratings" id="rating-info" name="rating-info" method="POST">
-        
-        <label for="userID">User ID</label>
-        <input type="text" id="userID" name="userID"><br>
+    <form action="/ratings/{{id}}" id="rating-info" name="rating-info" method="POST">
+    
 
-        <label for="toolID">Tool ID</label>
-        <input type="text" id="toolID" name="toolID"><br>
+    <label for="rating">Rating</label>
+    <select id="rating" name="rating">
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+    </select><br>
 
-        <label for="rating">Rating</label>
-        <input type="text" id="rating" name="rating"><br>
 
-        <label for="comment">Comment</label>
-        <input type="text" id="comment" name="comment"><br>
+        <label for="review">Review</label>
+        <input type="text" id="review" name="review"><br>
 
         <button id="submitButton" name="submitButton">Submit</button>
     </form>

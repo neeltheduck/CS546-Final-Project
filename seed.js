@@ -1,11 +1,12 @@
 import * as users from "./data/users.js";
 import * as tools from "./data/tools.js";
+import * as ratings from "./data/ratings.js";
 import {closeConnection} from './config/mongoConnection.js';
 
 async function main() {
     await users.registerUser("Adib","Osmany","adibo","Adib&1234","He/Him","hi","NYC","dark")
     let adib = await users.getByUserName("adibo")
-    await users.registerUser("Neel","Meyyur","neelm","Neel&1234","They/Them","hi","NYC","dark")
+    await users.registerUser("Neel","Meyyur","neelm","Neel&1234","He/Him","hi","NYC","dark")
     let neel = await users.getByUserName("neelm")
     await users.registerUser("Tara","Giblin","tarag","Tara&1234","She/Her","hi","NYC","dark")
     let tara = await users.getByUserName("tarag")
@@ -13,7 +14,7 @@ async function main() {
     let kashish = await users.getByUserName("kashishp")
     await users.registerUser("Patrick","Hill","patrickh","Patrick&1234","He/Him","hi","NYC","dark")
     let patrick = await users.getByUserName("patrickh")
-    await users.registerUser("Jey","Joseph","jeyjo","Jey&1234","He/Him","hi","NYC","light")
+    await users.registerUser("Jey","Joseph","jeyjo","Jey&1234","She/Her","hi","NYC","light")
     let jey = await users.getByUserName("jeyjo")
     let pie=await tools.addTool("Pie","very delicious pie", "Some Damage", adib._id.toString(), ["on",undefined,"on",undefined,"on",undefined,undefined], "Hoboken, NJ, USA","1724515479000.jpeg")
     pie=pie.insertedId.toString()
@@ -36,6 +37,7 @@ async function main() {
     let calculator=await tools.addTool("Calculator","BI-NoSpire calcultor", "Ok", kashish._id.toString(), ["on",undefined,"on","on","on","on",undefined], "Hoboken, NJ, USA","1724515479009.jpeg")
     calculator=calculator.insertedId.toString()
     
+    await ratings.addRating(adib._id.toString(), calculator, "1", "Man this did not work at all!!!!");
     // await closeConnection();
 
 }
