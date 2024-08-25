@@ -103,6 +103,21 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
         {{/each}}
     </ul>
 
+    <h2>Reviews:</h2>
+    <ul class="reviewList">
+        {{#each reviews}}
+        <article class="reviewElem">
+            <div class="reviewer">            
+                <p>From: {{userID}}</p>
+            <p>Rating: {{rating}}/5</p>
+            <p>Posted: {{dateAdded}}</p>
+            </div>
+            <p>Review:</p>
+            <p>{{comment}}</p>
+        </article>
+        {{/each}}
+    </ul>
+
 
 
             <script src="../public/js/client_side_validation.js"></script>

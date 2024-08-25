@@ -6,7 +6,7 @@ export const addRating = async (userID, ratingID, rating, comment) => {
     try {
         const ratingCollection = await ratings();
         const dateAdded = new Date().toLocaleDateString();
-        const newRating = {userID, ratingID, rating, comment};
+        const newRating = {userID, ratingID, rating, comment, dateAdded};
         const result = await ratingCollection.insertOne(newRating);
 
         if (!result.acknowledged || !result.insertedId) throw 'Error: Rating could not be inserted into database';
@@ -19,7 +19,12 @@ export const addRating = async (userID, ratingID, rating, comment) => {
     }
 }
 
-
+export const getRatingsById = async (ratingID) => {
+    const ratingCollection = await ratings();
+    let ratingList = await ratingCollection.find({ratingID: ratingID}).toArray();
+    if (!ratingList) throw 'Error: Could not get tool collection';
+    return ratingList;
+}
 
 export const getRatingsByTool = async (toolID) => {
     // to do

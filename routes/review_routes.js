@@ -1,8 +1,5 @@
-import express from 'express';
-import helper from '../helpers.js';
-// import { Router } from 'express';
-// const router = Router();
-const router = express.Router();
+import {Router} from 'express';
+const router = Router();
 
 router
     .route('/review/:id')
@@ -26,3 +23,4 @@ router
             res.json({success: false, error: e});
         }
     });
+    export default router;

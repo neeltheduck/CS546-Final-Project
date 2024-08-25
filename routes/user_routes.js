@@ -2,6 +2,7 @@ import express from 'express';
 import {Router} from 'express';
 const router = Router();
 import {getUser, get, toolRequested} from '../data/users.js';
+import { getRatingsById } from '../data/ratings.js';
 import helper from '../helpers.js';
 //import {authCheck} from app.js;
 
@@ -16,6 +17,12 @@ router
         if (!user){
             return res.status(404).send('Sorry! User not found.');
         }
+        let reviews=await getRatingsById(user._id.toString())
+        for (let i=0; i<reviews.length; i++){
+            let reviewer=await get(reviews[i].userID)
+            reviews[i].userID= reviewer.firstName+" "+reviewer.lastName;
+        }
+
 
         res.render('users', {
             firstName: user.firstName,
@@ -30,6 +37,7 @@ router
             reservationHistory: user.reservationHistory,
             tradeStatuses: user.tradeStatuses,
             wishList: user.wishList,
+            reviews: reviews
         });
     } catch (error) {
         res.status(500).send('Error: Internal Server Error.');
@@ -54,6 +62,11 @@ router
         if (!result) return res.status.render('users', {hasErrors: true, error: 'Error: Could not accept/decline request'});
         let user = await get(lender_id);
         if (!user) return res.status(404).send('Error: User not found');
+        let reviews=await getRatingsById(user._id.toString())
+        for (let i=0; i<reviews.length; i++){
+            let reviewer=await get(reviews[i].userID)
+            reviews[i].userID= reviewer.firstName+" "+reviewer.lastName;
+        }
         return res.render('users', {
             firstName: user.firstName,
             lastName: user.lastName,
@@ -67,6 +80,7 @@ router
             reservationHistory: user.reservationHistory,
             tradeStatuses: user.tradeStatuses,
             wishList: user.wishList,
+            reviews: reviews
         });
     } catch (e) {
         return res.status(500).render('users', {hasErrors: true, error: e});
