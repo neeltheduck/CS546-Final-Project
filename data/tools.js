@@ -157,7 +157,7 @@ export const deleteTool = async (toolid,userid) => {
     console.log(deletionInfo);
     // const user = await userCollection.findOne({listedTools: id});
     if (!user) throw `Error: Could not find user with tool id ${id}`;
-    const updatedUser = await userCollection.updateMany({_id: userid}, {$pull: {listedTools: { _id: toolid }}}); 
+    const updatedUser = await userCollection.updateOne({ _id: new ObjectId(userid) }, { $pull: { listedTools: { _id: new ObjectId(toolid) } } });
     console.log("Updated User:");
     console.log(updatedUser);
 
