@@ -2,7 +2,7 @@ import auth_routeRoutes from './auth_routes.js';
 import {static as staticDir} from 'express';
 import rating_routes from './rating_routes.js';
 import tool_routes from './tool_routes.js';
-import user_routes from './user_routes.js';
+import user_routes from "./user_routes.js";
 
 const constructorMethod = (app) => {
   app.use('/', auth_routeRoutes);

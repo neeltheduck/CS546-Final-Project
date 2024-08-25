@@ -1,7 +1,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>CTLS</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
@@ -12,9 +12,20 @@
         <a href="/:username">Profile</a> 
         <a href="/toolsregister">Manage</a>
     </header>
-    <h1>landing</h1>
+    <h1>All Tools</h1>
     <div id="error" class="error" hidden></div>
     {{#if hasErrors}}
         <div class="error">Error: {{error}}</div>
     {{/if}} 
+
+    <div class="toolsDiv">
+    {{#each tools}}
+    <a href="/tools/{{_id}}" class="toolLink">
+    <article class="toolArt">
+        <img class="toolImage" alt="{{toolName}} image" src="public/uploads/{{image}}"> <br> <h2>{{toolName}}</h2> <br> <h3>{{description}}</h3> <h4>condition: {{condition}}</h4> 
+    </article>
+    </a>
+    {{/each}}
+    </div>
+
 </body>

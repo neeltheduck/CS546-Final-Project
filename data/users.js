@@ -229,3 +229,15 @@ export const updateTool = async (userId, tool) => {
     user._id = user._id.toString();
     return user;
   };
+
+  export const getByUserName = async (username) =>{
+    const collectionUser = await users();
+
+    return await collectionUser.findOne({ username: username });
+  }
+
+  export const getUser = async (username) =>{
+    const collectionUser = await users();
+
+    return await collectionUser.findOne({ username: username });
+  }

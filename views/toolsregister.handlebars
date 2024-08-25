@@ -52,39 +52,17 @@
             <fieldset>
                 <legend>Choose for date availability starting today:</legend>
 
-            <div>
-                <input type="checkbox" id="d1" name="d1" checked />
-                <label for="d1">Sunday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d2" name="d2" />
-                <label for="d2">Monday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d3" name="d3" />
-                <label for="d3">Tuesday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d4" name="d4" />
-                <label for="d4">Wednesday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d5" name="d5" />
-                <label for="d5">Thursday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d6" name="d6" />
-                <label for="d6">Friday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d7" name="d7" />
-                <label for="d7">Saturday</label>
+            <select id="month_start_date">
+                <option value="1">1</option>
+                <option value="2">2</option>
+            </select> 
+            <div id="end_date">
+
             </div>
             </fieldset>
 
             <label for="autocomplete">Location</label>
             <input id="autocomplete" type="text" name="autocomplete" placeholder="Enter a location" /><br>
-    
             <button id="submitButton" name="submitButton">Submit</button>
         </form><br>
         <div id="toolregistererror" class="formerror" hidden></div>

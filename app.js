@@ -15,7 +15,7 @@ app.use(session({
 }))
 
 const storage = multer.diskStorage({
-    destination:(req,file,cb) => {cb(null,'uploads')},
+    destination:(req,file,cb) => {cb(null,'public/uploads')},
     filename:(req,file,cb) =>{
         cb(null, Date.now() + path.extname(file.originalname))
     }
@@ -98,16 +98,18 @@ const upload = multer({ storage: storage });
 //     next();
 //   });
 
-// //6
-// app.use('/logout', async (req, res, next) => {
+//6
+app.use('/users', async (req, res, next) => {
+  if (req.method == 'GET') {
+          if (req.session.user) {
+              return res.redirect('/' + req.session.user.username);
+          }
+          
+  }
+  next();
 
-//     if (req.method == 'GET') {
-//             if (!req.session.user) {
-//                 return res.redirect('/login');
-//             }
-//     }
-//     next();
-//   });
+});
+
 
 
 //---------------------------------------------------------------------
@@ -129,7 +131,9 @@ app.post("/toolsregister",  upload.single("image"), async (req, res, next) => {
 
 configRoutes(app);
 
-//comment this out if DB is already filled with filler data
+
+// //comment this out if DB is already filled with filler data
+
 // console.log("please hold while seed file loads")
 // await main();
 // console.log("done loading seed!")

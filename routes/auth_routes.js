@@ -1,4 +1,5 @@
 import {registerUser, loginUser} from '../data/users.js';
+import {addTool,getAllTools,getToolWithID} from '../data/tools.js';
 import{      
     checkIsProperString,
     checkIsProperPassword,
@@ -23,16 +24,16 @@ router.route('/register').get(async (req, res) => {
     })
     .post(async (req, res) => {
     //code here for POST
-        let firstName = req.body.firstName
-        let lastName = req.body.lastName
-        let username = req.body.username
-        let password = req.body.password
-        let bio = req.body.bio
-        let themePreference = req.body.themePreference
-        let pronouns = req.body.pronouns
-        let confirmPassword = req.body.confirmPassword
-        let userLocation = req.body.userLocation
-
+        let firstName= req.body.firstName
+        let lastName=req.body.lastName
+        let username=req.body.username
+        let password=req.body.password
+        let bio=req.body.bio
+        let themePreference=req.body.themePreference
+        let pronouns=req.body.pronouns
+        let confirmPassword=req.body.confirmPassword
+        let userLocation= req.body.userLocation
+        
         try {
             firstName = await helper.checkString(firstName, "First Name");
             lastName = await helper.checkString(lastName, "Last Name");
@@ -48,9 +49,9 @@ router.route('/register').get(async (req, res) => {
             req.method='GET'
             return res.status(400).render('register',{hasErrors: true,error: e});
           }
-
+        
           let register
-
+        
           try {
             register = await registerUser(
               firstName,
@@ -65,7 +66,7 @@ router.route('/register').get(async (req, res) => {
             return res.status(400).render('register',{hasErrors: true,error: e});
         }
         
-        if (register.signupCompleted) {
+        if (register.signupCompleted){
             req.method='GET'
             return res.redirect('/login');
         } else {
@@ -97,8 +98,8 @@ router.route('/login').get(async (req, res) => {
 
     try {
         const user = await loginUser(logindata.username, logindata.password);
-        console.log("User:");
-        console.log(user);
+        // console.log("User:");
+        // console.log(user);
         if (user){
             req.session.user=user
             console.log("User Logged In");
@@ -112,13 +113,15 @@ router.route('/login').get(async (req, res) => {
 
     });
 
-router.route('/landing').get(async (req, res) => {
-    try {
-        console.log('inside landing');
-        return res.render('landing', {title: 'Landing Page'})
-    } catch (e) {
-        return res.status(500).json({error: e});
-    }
-});
+    router.route('/landing').get(async (req, res) => {
+        try {
+            let tools=await getAllTools()
+            tools.reverse();
+            console.log('inside landing');
+            return res.render('landing', {title: 'Home', tools: tools});
+        } catch (e) {
+            return res.status(500).json({error: e});
+        }
+    });
 
     export default router;

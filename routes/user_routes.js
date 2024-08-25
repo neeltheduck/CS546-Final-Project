@@ -1,8 +1,9 @@
+import express from 'express';
 import {Router} from 'express';
 const router = Router();
-import {getUser} from "../data/users.js";
-//import {authCheck} from '../app.js';
-import helper from '../helpers.js';
+import {getUser} from '../data/users.js';
+//import {authCheck} from app.js;
+
 
 // getUser
 router
@@ -16,8 +17,21 @@ router
         if (!user){
             return res.status(404).send('Sorry! User not found.');
         }
-        console.log(user);
-        return res.render('users');
+
+        res.render('users', {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            username: user.username,
+            pronouns: user.pronouns,
+            bio: user.bio,
+            userLocation: user.userLocation,
+            themePreference: user.themePreference,
+            listedTools: user.listedTools,
+            borrowedTools: user.borrowedTools,
+            reservationHistory: user.reservationHistory,
+            tradeStatuses: user.tradeStatuses,
+            wishList: user.wishList,
+        });
     } catch (error) {
         res.status(500).send(error);
     }
@@ -27,7 +41,7 @@ router
 
 // deleteUser
 
-/*router.
+router.
 delete('/delete/:username', async (req, res) => {
     try {
         let currentUsername = req.params.username;
@@ -42,3 +56,5 @@ delete('/delete/:username', async (req, res) => {
 });*/
 
 export default router;
+
+// create middleware for /users so that it redirects to /:username

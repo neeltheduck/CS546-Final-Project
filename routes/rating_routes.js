@@ -22,6 +22,11 @@ router
             // const ratingData = req.body;
             console.log("Rating Data:");
             console.log(req.body);
+            req.body.userID = await helper.checkId(req.body.userID, 'User ID');
+            req.body.toolID = await helper.checkId(req.body.toolID, 'Tool ID');
+            if (isNaN(req.body.rating)) throw 'Error: Rating must be a number';
+            if (req.body.rating < 0 || req.body.rating > 10) throw 'Error: Rating must be a number between 0 and 10';
+            req.body.comment = await helper.checkString(req.body.comment, 'Comment');
             //ratingID, userID, toolID, rating, comment
             req.body.userID = await helper.checkId(req.body.userID, 'User ID');
             req.body.toolID = await helper.checkId(req.body.toolID, 'Tool ID');
