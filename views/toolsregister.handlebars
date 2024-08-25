@@ -50,36 +50,11 @@
             <input type="file" accept="image/*" id="image" name="image"><br>
 
             <fieldset>
-                <legend>Choose for date availability starting today:</legend>
-
-            <div>
-                <input type="checkbox" id="d1" name="d1" checked />
-                <label for="d1">Sunday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d2" name="d2" />
-                <label for="d2">Monday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d3" name="d3" />
-                <label for="d3">Tuesday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d4" name="d4" />
-                <label for="d4">Wednesday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d5" name="d5" />
-                <label for="d5">Thursday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d6" name="d6" />
-                <label for="d6">Friday</label>
-            </div>
-            <div>
-                <input type="checkbox" id="d7" name="d7" />
-                <label for="d7">Saturday</label>
-            </div>
+                <legend>Choose a start and end date for the availability of your tool:</legend>
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" min="2024-01-01" max="2027-01-01">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" min="2024-01-01" max="2027-01-01">
             </fieldset>
 
             <label for="autocomplete">Location</label>
