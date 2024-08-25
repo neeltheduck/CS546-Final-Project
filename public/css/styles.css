@@ -2,7 +2,7 @@
 body{
     font-size: large;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: aqua;
+    background-color: ;
     margin: 10px; 
 }
 
@@ -20,6 +20,19 @@ label{
     background-color:darkkhaki;
 }
 
+table{
+    margin: 1em auto;
+    border-collapse: collapse;
+    width: 80%;
+}
+tr{
+    border: 1px solid black;
+}
+td{
+    border: 1px solid black;
+    padding: 10px;
+    text-align: center;
+}
 textarea{
     margin: 1em;
     padding: 10px;
@@ -61,8 +74,31 @@ p {
     padding: 10px;
     text-align: center;
 }
-
-
+#lenderh3{
+    text-align: center;
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: bolder;
+}
+.deletetoolpara{
+    text-align: center;
+    margin-top: 10px;
+    font-size: 30px;
+    font-weight: bolder;
+}
+#lenderlist{
+    margin: 0 auto;
+    padding: 5%;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bolder;
+}
+#lendername{
+    flex-grow: 1;
+    margin-top: 20px;
+    font-size: 30px;
+    font-weight: bolder;
+}
 #welcome {
     font-size: 1.2em;
     margin-bottom: 10px;
@@ -257,24 +293,6 @@ body.dark .greeting h1,  body.dark .greeting h3, body.dark .greeting h2 {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 .scroll-container {
     display: grid;
     gap: 5%;

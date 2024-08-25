@@ -6,12 +6,12 @@
 
 <body>
     <h1>edit tool</h1>
-    <form action="/toolsedit" id="edit-tool-info" name="edit-tool-info" class="dark" method="POST" enctype="multipart/form-data">
+    <form action="/toolsedit" id="edit-tool-info" name="edit-tool-info" class="dark" method="POST" onsubmit="return checkForm(this);" enctype="multipart/form-data" >
     <!-- Hidden field to store ID -->
     <input type="hidden" id="toolId" name="toolId" value="{{tool._id}}" />
     <input type="hidden" id="userID" name="userID" value="{{tool.userID}}" />
     <input type="hidden" id="dateAdded" name="dateAdded" value="{{tool.dateAdded}}" />
-    <input type="hidden" id="images" name="images" value="{{tool.images}}" />
+    <input type="hidden" id="image" name="image" value="{{tool.image}}" />
     <input type="hidden" id="availability" name="availability" value="{{tool.availability}}" />
     <input type="hidden" id="location" name="location" value="{{tool.location}}" />
     <label for="toolName">Tool Name</label>
@@ -19,7 +19,6 @@
 
     <label for="description">Description</label>
     <input type="text" id="description" name="description" value="{{tool.description}}" /><br>
-    <p>Previous Description - {{tool.condition}}</p>
     <label for="condition">Previous Condition - {{tool.condition}} </label>
     <select name="condition" id="condition">
                 <option value="Like New">Like New</option>
@@ -30,12 +29,15 @@
                 <option value="Some Damage">Some Damage</option>
                 <option value="Very Damaged">Very Damaged</option>
     </select><br>
+    <p>Previous Image</p>
+    <img src="/public/uploads/{{tool.image}}" alt="Image of {{tool.toolName}}" style="width:200px; height:200px;">
+    <label for="changeimage">Change Image</label>
+    <input type="checkbox" id="changeimage" name="changeimage" value="false" /><br>
+    <label for="image">(Upload new to replace)</label>
+    <input type="file" accept="image/*" id="newimage" name="newimage"><br>
 
-    {{!-- <label for="image">Image of Product (Upload new to replace)</label>
-    <input type="file" accept="image/*" id="image" name="image"><br> --}}
-
-    {{!-- <fieldset>
-        <legend>Choose date availability starting today:</legend>
+    <fieldset>
+        <legend>Choose date availability starting from {{displaydate}}</legend>
         <div>
             <input type="checkbox" id="d1" name="d1" {{#if tool.availability.[0]}}checked{{/if}} />
             <label for="d1">Sunday</label>
@@ -64,12 +66,22 @@
             <input type="checkbox" id="d7" name="d7" {{#if tool.availability.[6]}}checked{{/if}} />
             <label for="d7">Saturday</label>
         </div>
-    </fieldset> --}}
+    </fieldset>
+    <label for="location">Location</label>
+    <input type="text" id="location" name="location" value="{{tool.location}}" /><br>
     
     <button id="edittoolsubmit" name="edittoolsubmit" type="submit">Update Tool</button>
 </form><br>
-{{!-- <div id="toolregistererror" class="formerror" hidden></div> --}}
+
+
 <script src="../public/js/client_side_validation.js"></script>
-
-
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB4Xt0XFTeyZZXA_2tCA7i1_nH4cL_v82w&libraries=places"></script>
+<script>
+function initAutocomplete() {
+    var input = document.getElementById('location');
+    var autocomplete = new google.maps.places.Autocomplete(input);
+}
+    google.maps.event.addDomListener(window, 'load', initAutocomplete);
+</script>
+<a href="/lenderportalpage">Back</a>
 </body>

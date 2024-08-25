@@ -31,7 +31,7 @@ export const addTool = async (toolName, description, condition, userID, availabi
 
         
         const toolCollection = await tools();
-        const dateAdded = new Date().toLocaleDateString();
+        const dateAdded = new Date();
         const newTool = {toolName, description, condition, userID, dateAdded, availability, location, image};
         // console.log("Tool object created.");
         // console.log(newTool);

@@ -9,14 +9,16 @@
     <h2>delete tools</h2>
 
     <h1>{{tool.toolName}}</h1>
-            <p>Description: {{tool.description}}</p>
-            <p>Condition: {{tool.condition}}</p>
-            <p>Availability: {{tool.availability}}</p>
-            <p>Location: {{tool.location}}</p>
+            <p class="deletetoolpara"><img src="/public/uploads/{{tool.image}}" alt="Image of {{tool.toolName}}" style="width:200px; height:200px;"></p>
+            <p class="deletetoolpara">Tool Name: {{tool.toolName}}</p>
+            <p class="deletetoolpara">Description: {{tool.description}}</p>
+            <p class="deletetoolpara">Condition: {{tool.condition}}</p>
+            <p class="deletetoolpara">Date Added: {{tool.dateAdded}}</p>
+            {{!-- <p>Availability: {{tool.availability}}</p> --}}
+            <p class="deletetoolpara">Location: {{tool.location}}</p>
 
             <form id="delete-tool" action="/toolsdelete/{{tool._id}}" method="POST">
                 <button type="submit">Delete this tool</button>
             </form>
-            {{!-- <p>Images: <img src="{{tool.images}}" alt="{{tool.toolName}} image"></p> --}}
-            <a href="/tools">Back to tools list</a>
+            <a href="/lenderportalpage">Back</a>
 </body>

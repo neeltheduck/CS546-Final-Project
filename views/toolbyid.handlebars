@@ -2,17 +2,47 @@
             
 <head>
     <meta charset="UTF-8">
-    <title>CTLS</title>
+    <title>tool</title>
     <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
 <body>
             <h1>{{tool.toolName}}</h1>
+            <p><img src="/public/uploads/{{tool.image}}" alt="Image of {{tool.toolName}}" style="width:100px; height:100px;"></p>
             <p>Description: {{tool.description}}</p>
             <p>Condition: {{tool.condition}}</p>
-            <p>Availability: {{tool.availability}}</p>
+            <table>
+                <tr>
+                    <th>Sun</th>
+                    <th>Mon</th>
+                    <th>Tue</th>
+                    <th>Wed</th>
+                    <th>Thu</th>
+                    <th>Fri</th>
+                    <th>Sat</th>
+                </tr>
+                <tr>
+                    <td>{{tool.availability.[0]}}</td>
+                    <td>{{tool.availability.[1]}}</td>
+                    <td>{{tool.availability.[2]}}</td>
+                    <td>{{tool.availability.[3]}}</td>
+                    <td>{{tool.availability.[4]}}</td>
+                    <td>{{tool.availability.[5]}}</td>
+                    <td>{{tool.availability.[6]}}</td>
+                </tr>
+                <tr>
+                    <td>{{tool.availability.[7]}}</td>
+                    <td>{{tool.availability.[8]}}</td>
+                    <td>{{tool.availability.[9]}}</td>
+                    <td>{{tool.availability.[10]}}</td>
+                    <td>{{tool.availability.[11]}}</td>
+                    <td>{{tool.availability.[12]}}</td>
+                    <td>{{tool.availability.[13]}}</td>
+            </table>
+
+            {{!-- <p>Availability: {{tool.availability}}</p> --}}
             <p>Location: {{tool.location}}</p>
-            {{!-- <p>Images: <img src="{{tool.images}}" alt="{{tool.toolName}} image"></p> --}}
+            <p>Date Added: {{tool.dateAdded}}</p>
             <form id="tool_request" name="tool_request" method="POST">
                 <label for="req_username">Your Username:</label>
                 <input type="text" id="req_username" name="req_username">
@@ -31,6 +61,6 @@
             {{#if reqSuccess}}
                 <p>Request successfully sent!</p>
             {{/if}}
-            <a href="javascript:history.back()">Back</a>
+            <p><a href="javascript:history.back()">Back</a></p>
             <script src="../public/js/client_side_validation.js"></script>
 </body>

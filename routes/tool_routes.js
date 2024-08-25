@@ -54,14 +54,16 @@ router.route('/toolsdelete/:id')
             let tool = await deleteTool(req.params.id, req.session.user._id);
             console.log("Tool: output");
             console.log(tool);
-            return res.redirect('/lenderportalpage');
+            // return res.redirect('/lenderportalpage');
             // res.status().json(tool);
-            if (true) {
+            console.log("Tool deleted ack:");
+            console.log(tool.updatedUser.acknowledged);
+            if (tool.updatedUser.acknowledged) {
                 return res.redirect('/lenderportalpage');
             }
             else{
                 console.log("Tool not deleted");
-                return res.redirect('/toolsdelete');
+                return res.redirect('/lenderportalpage');
             }
             
         } catch (error) {
@@ -78,9 +80,12 @@ router.route('/toolsedit/:id')
             const tool = await getToolWithID(req.params.id);
             console.log("Tool:");
             console.log(tool);
-            let today = new Date();
-            today = today.toISOString().split('T')[0];
-            res.render('toolsedit', {themePreference: 'dark', tool: tool});
+            const displaydate = tool.dateAdded.toLocaleDateString();
+            // let today = new Date();
+            // const daydiff = (today - tool.dateAdded) / (1000 * 60 * 60 * 24);
+            // today = today.toISOString().split('T')[0];
+            
+            res.render('toolsedit', {themePreference: 'dark', tool: tool,displaydate: displaydate});
             
         }
         catch (error) {
@@ -93,6 +98,10 @@ router.route('/toolsedit/:id')
         try {
             console.log("inside tooledit route post");
             console.log(req.body);
+            let img = req.body.images;
+            if(req.body.changeimage){
+                img = req.body.newimage;
+            }
             const toolData = {
                 _id: req.body._id,
                 toolName: req.body.toolName,
@@ -102,8 +111,13 @@ router.route('/toolsedit/:id')
                 dateAdded: req.body.dateAdded,
                 availability: req.body.availability,
                 location: req.body.autocomplete,
-                image: req.body.image
+                image: img
             }
+
+            console.log("dateAdded: ");
+            console.log(toolData.dateAdded);
+            console.log("typeof dateAdded: ");
+            console.log(typeof toolData.dateAdded);
             console.log(toolData);
             const updatetools = await updateTool(toolData);
             console.log("Tool edit : output");
@@ -194,6 +208,29 @@ router.route('/tools/:id')
             console.log(tool);
             let start = tool.availability.start.toISOString().split('T');
             let end = tool.availability.end.toISOString().split('T');
+            console.log("Date Added:");
+            console.log(tool.dateAdded);
+            console.log("typeof Date Added:");
+            console.log(typeof tool.dateAdded);
+            let day=tool.dateAdded.getDay();
+            console.log("Day:");
+            console.log(day);
+            let available= new Array(14).fill(null);
+            console.log("available:");
+            console.log(available);
+            console.log("Availability:");
+            console.log(tool.availability);
+            for(let i=0;i<tool.availability.length;i++){
+                if(tool.availability[i]){
+                    available[i+day]="A";
+                }
+                else{
+                    available[i+day]="X";
+                }
+            }
+            console.log("Available:");
+            console.log(available);
+            tool.availability=available;
             res.render('toolbyid', {themePreference: 'dark', tool: tool, start: start[0], end: end[0]});
         } catch (error) {
             console.log("tool route get error");
