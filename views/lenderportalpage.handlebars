@@ -1,6 +1,6 @@
 <head>
     <meta charset="UTF-8">
-    <title>CTLS</title>
+    <title>lender portal</title>
     <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
@@ -11,19 +11,17 @@
         <a href="/users">Profile</a> 
         <a href="/lenderportalpage">Manage</a>
     </header>
-
-<h1>tools list</h1>
-<h2>you searched for:  {{tool_name}}</h2>
+        <h2>lender portal page, make changes to your tools here</h2>
 
 
+<h4><a href="/toolsregister">add new tool</a></h4>
 {{#if tools.length}}
     <ol>
         {{#each tools}}
             <li>
-                <a href="/tools/{{_id}}">
-                {{this.toolName}} <br>
-                </a>
-                 {{this._id}} description {{this.description}} - {{this.condition}} - {{this.availability}} - {{this.location}} - {{this.images}}
+                
+                {{this.toolName}} <a href="/toolsedit/{{this._id}}">edit</a> <a href="/toolsdelete/{{this._id}}">delete</a>
+                
             </li>
         {{/each}}
     </ol>
