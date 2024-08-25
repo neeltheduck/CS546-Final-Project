@@ -163,7 +163,7 @@ router.route('/toolsregister')
 router.route('/tools')
     .get(async (req, res) => {
         try {
-            res.render('tools', {theme: req.session.user.themePreference});
+            res.render('searchTools', {theme: req.session.user.themePreference});
         } catch (error) {
             console.log("tools route get error");
             console.log(error);
@@ -173,9 +173,9 @@ router.route('/tools')
     .post(async (req, res) => {
         try{
             let search=req.body.search
+            let condition=req.body.condition
             search= checkIsProperString(search,"Search")
-
-        let tools=await searchTools(search)
+        let tools=await searchTools(search,condition)
         res.json({success: true, tools: tools, search: search});
         }catch(e){
             res.json({success: false, error: e});

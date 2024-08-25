@@ -402,3 +402,36 @@ body.light .toolArt h4 {
         max-width: 100%;
     }
 }
+
+
+.searchToolForm {
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    padding: 20px; /* Optional: Add some padding around the form */
+}
+
+#searchForm {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Optional: Add some space between the elements */
+}
+
+#searchForm label {
+    margin-right: 5px; /* Space between label and input/select */
+}
+
+#search_term {
+    padding: 5px;
+    font-size: 1em;
+}
+
+#condition {
+    padding: 5px;
+    font-size: 1em;
+}
+
+#searchForm button {
+    padding: 5px 10px;
+    font-size: 1em;
+    cursor: pointer;
+}
