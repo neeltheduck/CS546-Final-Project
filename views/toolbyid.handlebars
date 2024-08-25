@@ -13,5 +13,24 @@
             <p>Availability: {{tool.availability}}</p>
             <p>Location: {{tool.location}}</p>
             {{!-- <p>Images: <img src="{{tool.images}}" alt="{{tool.toolName}} image"></p> --}}
+            <form id="tool_request" name="tool_request" method="POST">
+                <label for="req_username">Your Username:</label>
+                <input type="text" id="req_username" name="req_username">
+                <input type="hidden" id="lender_id" name="lender_id" value={{tool.userID}}>
+                <input type="hidden" id="tool_id" name="tool_id" value={{tool._id}}>
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" min={{start}} max={{end}}>
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" min={{start}} max={{end}}>
+                <br>
+                <input type="submit" value="Send Request">
+            </form>
+            {{#if hasErrors}}
+                <div class="error">{{error}}</div>
+            {{/if}}
+            {{#if reqSuccess}}
+                <p>Request successfully sent!</p>
+            {{/if}}
             <a href="javascript:history.back()">Back</a>
+            <script src="../public/js/client_side_validation.js"></script>
 </body>
