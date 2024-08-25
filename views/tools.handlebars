@@ -1,0 +1,33 @@
+<head>
+    <meta charset="UTF-8">
+    <title>CTLS</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+</head>
+
+<body>
+    <header class="header" id="header">  
+        <a href="/landing">Home</a>  
+        <a href="/tools">Search</a>
+        <a href="/users">Profile</a> 
+        <a href="/lenderportalpage">Manage</a>
+    </header>
+
+<h1>tools list</h1>
+<h2>you searched for:  {{tool_name}}</h2>
+
+
+{{#if tools.length}}
+    <ol>
+        {{#each tools}}
+            <li>
+                <a href="/tools/{{_id}}">
+                {{this.toolName}} <br>
+                </a>
+                 {{this._id}} description {{this.description}} - {{this.condition}} - {{this.availability}} - {{this.location}} - {{this.images}}
+            </li>
+        {{/each}}
+    </ol>
+{{else}}
+    <p>No tools found.</p>
+{{/if}}
+</body>

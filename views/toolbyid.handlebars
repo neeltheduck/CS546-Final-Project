@@ -1,0 +1,17 @@
+            {{!-- res.render('toolbyid', {themePreference: 'dark', tool: tool}); --}}
+            
+<head>
+    <meta charset="UTF-8">
+    <title>CTLS</title>
+    <link rel="stylesheet" href="../public/css/styles.css">
+</head>
+
+<body>
+            <h1>{{tool.toolName}}</h1>
+            <p>Description: {{tool.description}}</p>
+            <p>Condition: {{tool.condition}}</p>
+            <p>Availability: {{tool.availability}}</p>
+            <p>Location: {{tool.location}}</p>
+            {{!-- <p>Images: <img src="{{tool.images}}" alt="{{tool.toolName}} image"></p> --}}
+            <a href="/tools">Back to tools list</a>
+</body>
