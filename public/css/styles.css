@@ -239,6 +239,16 @@ body.light a.back {
 body.dark a.back {
     color: #ffffff;
 }
+.scroll-container {
+    display: grid;
+    gap: 5%;
+    grid-auto-flow: column;
+    grid-auto-columns: 30%;
+
+    overflow-x: auto;
+    overflow-y: hidden; /* Prevent vertical scrolling */
+    overscroll-behavior-inline: contain;
+}
 
 /* Container for all tool links */
 .toolsDiv {
@@ -258,7 +268,7 @@ body.dark a.back {
     display: block;
     box-sizing: border-box;
     flex: 1 1 calc(30% - 20px); /* Adjusts to three items per row with 15% space between */
-    max-width: 30%;
+    max-width: 100%;
     margin-bottom: 20px;
 }
 
