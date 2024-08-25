@@ -159,8 +159,6 @@ router.route('/toolsregister')
     .get(async (req, res) => {
         try {
             const toolslists = await getAllTools();
-            console.log("Toolslists:");
-            console.log(toolslists);
             res.render('tools', {themePreference: 'dark', tool_name: 'Tools searched', tools: toolslists});
         } catch (error) {
             console.log("tools route get error");
