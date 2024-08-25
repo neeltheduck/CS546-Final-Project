@@ -1,7 +1,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>CTLS</title>
+    <title>{{title}}</title>
     <link rel="stylesheet" href="../public/css/styles.css">
 </head>
 
@@ -17,6 +17,7 @@
     {{#if hasErrors}}
         <div class="error">Error: {{error}}</div>
     {{/if}} 
+
     <div class="toolsDiv">
     {{#each tools}}
     <a href="/tools/{{_id}}" class="toolLink">

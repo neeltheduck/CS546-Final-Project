@@ -98,8 +98,8 @@ router.route('/login').get(async (req, res) => {
 
     try {
         const user = await loginUser(logindata.username, logindata.password);
-        console.log("User:");
-        console.log(user);
+        // console.log("User:");
+        // console.log(user);
         if (user){
             req.session.user=user
             console.log("User Logged In");
