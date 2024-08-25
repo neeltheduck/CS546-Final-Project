@@ -16,8 +16,18 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
         <a href="/users">Profile</a> 
         <a href="/toolsregister">Manage</a>
     </header>
+
+    <h1>User Profile</h1>
+
+    <div id="error" class="error" hidden></div>
+    {{#if hasErrors}}
+        <div class="error">Error: {{error}}</div>
+    {{/if}}
+    
+    
     <div id="userView">
-    <p id="welcome">Welcome {{this.firstName}} {{this.lastName}}!</p>
+    <p id="welcome">Welcome {{firstName}} {{lastName}}!</p>
+    <h2>User Information</h2>
     <p>Username: {{username}}</p>
     <p>Pronouns: {{pronouns}}</p>
     <p>Bio: {{bio}}</p>
@@ -25,5 +35,61 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
 
     <a id="logoutLink" href="/logout">Logout</a>
     </div>
+
+    <h2>Listed Tools</h2>
+    <ul>
+        {{#each listedTools}}
+        <li>
+            <img src="/public/uploads/{{image}}" alt="Image of {{toolName}}" style="width:100px; height:100px;">
+            <p>Tool Name: {{toolName}}</p>
+            <p>Description: {{description}}</p>
+            <p>Condition: {{condition}}</p>
+            <p>Location: {{location}}</p>
+        </li>
+        {{/each}}
+    </ul>
+
+    <h2>Borrowed Tools</h2>
+    <ul>
+        {{#each borrowedTools}}
+        <li>
+            <img src="/public/uploads/{{image}}" alt="Image of {{toolName}}" style="width:100px; height:100px;">
+            <p>Tool Name: {{toolName}}</p>
+            <p>Description: {{description}}</p>
+            <p>Condition: {{condition}}</p>
+            <p>Location: {{location}}</p>
+        </li>
+        {{/each}}
+    </ul>    
+
+    <h2>Previously Reserved Tools</h2>
+    <ul>
+        {{#each reservationHistory}}
+        <li>
+            <img src="/public/uploads/{{image}}" alt="Image of {{toolName}}" style="width:100px; height:100px;">
+            <p>Tool Name: {{toolName}}</p>
+            <p>Description: {{description}}</p>
+            <p>Condition: {{condition}}</p>
+            <p>Location: {{location}}</p>
+        </li>
+        {{/each}}
+    </ul>
+
+    <h2>TradeStatuses</h2>
+    <ul>
+        {{#each tradeStatuses}}
+        <li>
+            <img src="/public/uploads/{{image}}" alt="Image of {{toolName}}" style="width:100px; height:100px;">
+            <p>Tool Name: {{toolName}}</p>
+            <p>Description: {{description}}</p>
+            <p>Condition: {{condition}}</p>
+            <p>Location: {{location}}</p>
+        </li>
+        {{/each}}
+    </ul>
+
+
+
             <script src="../public/js/client_side_validation.js"></script>
+            
 </body>
