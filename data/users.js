@@ -217,7 +217,7 @@ export const updateTool = async (userId, tool) => {
     
   };
 
-  const get = async (id) => {
+  export const getUser = async (id) => {
     checkIsProperString(id)
     id = id.trim();
     if (!ObjectId.isValid(id)) throw 'invalid object ID';

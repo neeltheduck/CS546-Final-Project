@@ -12,33 +12,29 @@ import{
 // addTool
 export const addTool = async ({toolName, description, condition, userID, availability, location, image}) => {
     try {
-        toolName=checkIsProperString(toolName,"tool name", 2, 40)
-        description=checkIsProperString(description,"description", 2, 500)
-        condition=checkIsProperString(condition,"condition",null,null, ["Like New","Very Good","Good","Ok","Minor Damage","Some Damage", "Very Damaged"]);
-        if(!image){
-            throw 'Image not provided'
+        toolName = await helper.checkString(toolName, 'Tool Name');
+        description = await helper.checkString(description, 'Description');
+        condition = checkIsProperString(condition,"condition",null,null, ["Like New","Very Good","Good","Ok","Minor Damage","Some Damage", "Very Damaged"]);
+        userID = await helper.checkId(userID, 'User ID');
+        location = await helper.checkString(location, 'Location');
+        if (!image) throw 'Error: Image not provided';
+
+        let dates = [];
+        for (let i = 0; i < availability.length; i++) {
+            if (availability[i] === 'on') {
+                if (i === 0) dates.push('Sunday');
+                if (i === 1) dates.push('Monday');
+                if (i === 2) dates.push('Tuesday');
+                if (i === 3) dates.push('Wednesday');
+                if (i === 4) dates.push('Thursday');
+                if (i === 5) dates.push('Friday');
+                if (i === 6) dates.push('Saturday');
+            }
         }
-        location=checkIsProperString(location,"location",2,40);
-        // toolName = await helper.checkString(toolName, 'Tool Name');
-        // description = await helper.checkString(description, 'Description');
-        // condition = await helper.checkString(condition, 'Condition');
-        // // userID = await helper.checkId(userID, 'User ID');
-        // location = await helper.checkString(location, 'Location');
-
-        // if (!availability) throw 'Error: Availability with a Start and End Date for the tool must be provided';
-        // availability.start = await helper.checkDate(availability.start, 'Availability Start Date');
-        // availability.end = await helper.checkDate(availability.end, 'Availability End Date');
-
-        // if (!images) throw 'Error: Images must be provided';
-        // if (!images.isArray()) throw 'Error: Images must be an array of tool images';
-        // for (let image in images) {
-        //     image = await helper.checkString(image, 'Image');
-        // }
-
         
         const toolCollection = await tools();
         const dateAdded = new Date().toLocaleDateString();
-        const newTool = {toolName, description, condition, userID, dateAdded, availability, location, image};
+        const newTool = {toolName, description, condition, userID, dateAdded, availability: dates, location, image};
         // console.log("Tool object created.");
         // console.log(newTool);
         // console.log("autocomplete");
@@ -64,7 +60,7 @@ export const addTool = async ({toolName, description, condition, userID, availab
     } catch (e) {
         console.log("Error in addTool:");
         console.log(e);
-        throw `Error: Tool was not successfully added.`;
+        throw `${e}. Tool was not successfully added.`;
     }
 }
 
@@ -95,11 +91,11 @@ export const getToolWithName = async (toolName) => {
     return tool;
 };
 // updateTool
-export const updateTool = async ({toolID, toolName, description, condition, userID, dateAdded, availability, location, images}) => {
+export const updateTool = async ({toolID, toolName, description, condition, userID, dateAdded, availability, location, image}) => {
     toolID = await helper.checkId(toolID, 'Tool ID');
     toolName = await helper.checkString(toolName, 'Tool Name');
     description  = await helper.checkString(description, 'Description');
-    condition = await helper.checkString(condition, 'Condition');
+    condition = checkIsProperString(condition,"condition",null,null, ["Like New","Very Good","Good","Ok","Minor Damage","Some Damage", "Very Damaged"]);
     userID = await helper.checkId(userID, 'User ID');
     dateAdded = await helper.checkDate(dateAdded, 'Date Added')
     location = await helper.checkString(location, 'Location');
@@ -108,11 +104,7 @@ export const updateTool = async ({toolID, toolName, description, condition, user
     availability.start = await helper.checkDate(availability.start, 'Availability Start Date');
     availability.end = await helper.checkDate(availability.end, 'Availability End Date');
 
-    if (!images) throw 'Error: Images must be provided';
-    if (!images.isArray()) throw 'Error: Images must be an array of tool images';
-    for (let image in images) {
-        image = await helper.checkString(image, 'Image');
-    }
+    if (!image) throw 'Error: Image must be provided';
 
     let updatedTool = {
         toolName: toolName,
@@ -122,7 +114,7 @@ export const updateTool = async ({toolID, toolName, description, condition, user
         dateAdded: dateAdded,
         availability: availability,
         location: location,
-        images: images
+        image: image
     };
 
     const toolCollection = await tools();

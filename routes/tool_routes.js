@@ -1,4 +1,6 @@
 import {Router} from 'express';
+import helper from '../helpers.js';
+import {checkIsProperString} from '../helpers.js';
 const router = Router();
 
 import {addTool,getTools,getToolWithID} from '../data/tools.js';
@@ -17,12 +19,18 @@ router.route('/toolsregister')
         try {
             let today = new Date();
             today = today.toISOString().split('T')[0];
-            let available=[req.body.d1,req.body.d2,req.body.d3,req.body.d4,req.body.d5,req.body.d6,req.body.d7]
+            let available=[req.body.d1,req.body.d2,req.body.d3,req.body.d4,req.body.d5,req.body.d6,req.body.d7];
+            console.log(available);
+            req.body.toolName = await helper.checkString(req.body.toolName, 'Tool Name');
+            req.body.description = await helper.checkString(req.body.description, 'Description');
+            req.body.condition = checkIsProperString(req.body.condition,"condition",null,null, ["Like New","Very Good","Good","Ok","Minor Damage","Some Damage", "Very Damaged"]);
+            req.session.user._id = await helper.checkId(req.session.user._id, 'User ID');
             const toolData={
                 toolName: req.body.toolName,
                 description: req.body.description,
                 condition: req.body.condition,
                 userID: req.session.user._id,
+                dateListed: today,
                 availability: available,
                 location: req.body.autocomplete,
                 image: req.body.image,
@@ -38,7 +46,7 @@ router.route('/toolsregister')
         } catch (error) {
             console.log("toolsregister route post error");
             console.log(error);
-            res.status(500).json({error: error.message})
+            res.status(500).render('toolsregister',{hasErrors: true, error})
         }
     });
 
@@ -61,6 +69,7 @@ router.route('/toolsregister')
         try {
             console.log("req");
             console.log(req);
+            req.params.id = await helper.checkId(req.params.id, 'Tool ID');
             const tool = await getToolWithID(req.params.id);
             console.log("Tool:");
             console.log(tool);
