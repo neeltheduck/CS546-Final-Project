@@ -14,7 +14,7 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
         <a href="/landing">Home</a>  
         <a href="/tools">Search</a>
         <a href="/users">Profile</a> 
-        <a href="/toolsregister">Manage</a>
+        <a href="/lenderportalpage">Manage</a>
     </header>
 
     <h1>User Profile</h1>
@@ -79,11 +79,28 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
     <ul>
         {{#each tradeStatuses}}
         <li>
-            <img src="/public/uploads/{{image}}" alt="Image of {{toolName}}" style="width:100px; height:100px;">
-            <p>Tool Name: {{toolName}}</p>
-            <p>Description: {{description}}</p>
-            <p>Condition: {{condition}}</p>
-            <p>Location: {{location}}</p>
+            <img src="/public/uploads/{{tool.image}}" alt="Image of {{tool.toolName}}" style="width:100px; height:100px;">
+            <p>Tool Name: {{tool.toolName}}</p>
+            <p>Description: {{tool.description}}</p>
+            <p>Condition: {{tool.condition}}</p>
+            <p>Location: {{tool.location}}</p>
+            <p>Requester: {{requester}}</p>
+            <p>Start Date: {{start}}</p>
+            <p>End Date: {{end}}</p>
+            <p>Status: {{status}}</p>
+            <form id="approval_form" name="approval_form" method="POST">
+                <input type="hidden" id="lender_id" name="lender_id" value={{tool.userID}}>
+                <input type="hidden" id="req_username" name="req_username" value={{requester}}>
+                <input type="hidden" id="tool_id" name="tool_id" value={{tool._id}}>
+                <input type="hidden" id="start_date" name="start_date" value="{{start}}">
+                <input type="hidden" id="end_date" name="end_date" value="{{end}}">
+                <label for="approval">Approve or Decline:</label>
+                <select id="approval" name="approval">
+                    <option value="approved">Approved</option>
+                    <option value="declined">Decline</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
         </li>
         {{/each}}
     </ul>

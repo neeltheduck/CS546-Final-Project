@@ -113,15 +113,19 @@ router.route('/login').get(async (req, res) => {
 
     });
 
-    router.route('/landing').get(async (req, res) => {
-        try {
-            let tools=await getAllTools()
-            tools.reverse();
-            console.log('inside landing');
-            return res.render('landing', {title: 'Home', tools: tools});
-        } catch (e) {
-            return res.status(500).json({error: e});
-        }
-    });
+router.route('/landing').get(async (req, res) => {
+    try {
+        let tools=await getAllTools()
+        tools.reverse();
+        return res.render('landing', {title: 'Home', tools: tools});
+    } catch (e) {
+        return res.status(500).json({error: e});
+    }
+});
+
+router.route('/logout').get(async (req, res) => {
+    req.session.destroy();
+    res.render('logout');
+  });
 
     export default router;

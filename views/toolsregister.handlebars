@@ -10,7 +10,7 @@
         <a href="/landing">Home</a>  
         <a href="/tools">Search</a>
         <a href="/users">Profile</a> 
-        <a href="/toolsregister">Manage</a>
+        <a href="/lenderportalpage">Manage</a>
     </header>
     <h1>tools</h1>
     <div id="error" class="error" hidden></div>
@@ -50,15 +50,11 @@
             <input type="file" accept="image/*" id="image" name="image"><br>
 
             <fieldset>
-                <legend>Choose for date availability starting today:</legend>
-
-            <select id="month_start_date">
-                <option value="1">1</option>
-                <option value="2">2</option>
-            </select> 
-            <div id="end_date">
-
-            </div>
+                <legend>Choose a start and end date for the availability of your tool:</legend>
+                <label for="start_date">Start Date:</label>
+                <input type="date" id="start_date" name="start_date" min="2024-01-01" max="2027-01-01">
+                <label for="end_date">End Date:</label>
+                <input type="date" id="end_date" name="end_date" min="2024-01-01" max="2027-01-01">
             </fieldset>
 
             <label for="autocomplete">Location</label>

@@ -135,7 +135,7 @@ configRoutes(app);
 // //comment this out if DB is already filled with filler data
 
 // console.log("please hold while seed file loads")
-// await main();
+ //await main();
 // console.log("done loading seed!")
 
 app.listen(3000, () => {
