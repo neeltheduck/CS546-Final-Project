@@ -41,6 +41,7 @@ const checkString = async (str, varName) => {
     if (varName === 'Theme Preference' && (str.toLowerCase() !== 'light' && str.toLowerCase() !== 'dark')) throw `Error: ${varName} must be either 'Light' or 'Dark'`;
     if ((varName === 'First Name' || varName === 'Last Name') && (str.length < 2 || str.length > 25)) throw `Error: ${varName} must be between 2-25 characters`;
     if (varName === 'Comment' && str.length < 10) throw `Error: ${varName} must be at least 10 characters`;
+    if (varName === 'Status' && (str.toLowerCase() !== 'approved' && str.toLowerCase() !== 'declined' && str.toLowerCase() !== 'pending')) throw `Error: ${varName} must be either Approved, Declined, or Pending`;
     
     return str;
 };
@@ -48,6 +49,8 @@ const checkString = async (str, varName) => {
 const checkDate = async (date, varName) => {
     if (!date) `Error: You must provide a ${varName}`;
     if (Object.prototype.toString.call(date) !== '[object Date]') throw `Error: ${varName} must be a Date`;
+    const currentDate = new Date();
+    if (date.getTime() < currentDate.getTime()) throw `Error: ${varName} must be a date after the current date`;
     return date;
 }
 
