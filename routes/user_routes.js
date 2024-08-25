@@ -1,7 +1,7 @@
 import express from 'express';
 import {Router} from 'express';
 const router = Router();
-import {getUser, get toolRequested} from '../data/users.js';
+import {getUser, get, toolRequested} from '../data/users.js';
 import helper from '../helpers.js';
 //import {authCheck} from app.js;
 
