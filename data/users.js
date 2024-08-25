@@ -6,6 +6,8 @@ import{
     checkIsProperPassword,
     containsNumbers, 
 } from './../helpers.js'
+import helper from '../helpers.js';
+import { getToolWithID } from "./tools.js";
 
 function validateCredentials(username, password) {
     const numbers = '1234567890';
@@ -241,3 +243,46 @@ export const updateTool = async (userId, tool) => {
 
     return await collectionUser.findOne({ username: username });
   }
+
+export const toolRequested = async (lenderID, requesterUsername, toolID, start_date, end_date, newStatus) => {
+    lenderID = await helper.checkId(lenderID, 'User ID');
+    requesterUsername = await helper.checkString(requesterUsername, 'Username');
+    toolID = await helper.checkId(toolID, 'Tool ID');
+    newStatus = await helper.checkString(newStatus, 'Status');
+
+    let tool = await getToolWithID(toolID);
+    let updateInfo;
+
+    const userCollection = await users();
+    if (newStatus === 'pending') { 
+        updateInfo = await userCollection.updateOne(
+            {_id: new ObjectId(lenderID)},
+            {$addToSet: {tradeStatuses: {tool, requester: requesterUsername, start: start_date, end: end_date, status: newStatus}}}
+        );
+        if (!updateInfo) throw 'Error: Tool could not be requested';
+    } else if (newStatus === 'approved' || newStatus === 'declined') {
+        let newTradeStatuses = await userCollection.findOne({_id: new ObjectId(lenderID)});
+        newTradeStatuses = newTradeStatuses.tradeStatuses;
+        for (let i = 0; i < newTradeStatuses.length; i++) {
+            console.log(newTradeStatuses[i].status);
+            if (newTradeStatuses[i].tool._id.toString() === toolID) {
+                newTradeStatuses[i].status = newStatus;
+            }
+        }
+        console.log(newTradeStatuses);
+        updateInfo = await userCollection.updateOne(
+            {_id: new ObjectId(lenderID)},
+            {$set: {tradeStatuses: newTradeStatuses}}
+        );
+        if (!updateInfo) throw 'Error: Tool could not be accepted/declined';
+        if (newStatus === 'approved') {
+            updateInfo = await userCollection.updateOne(
+                {username: requesterUsername},
+                {$addToSet: {reservationHistory: tool}}
+            );
+            if (!updateInfo) throw "Error: Tool could not be added to requester's reservation history";
+        }
+    }
+    
+    return updateInfo;
+};
