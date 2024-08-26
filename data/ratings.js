@@ -4,6 +4,11 @@ import { dbConnection } from "../config/mongoConnection.js";
 
 export const addRating = async (userID, ratingID, rating, comment) => {
     try {
+        userID = await helper.checkId(userID, 'User ID');
+        ratingID = await helper.checkId(ratingID, 'Rating ID');
+        if (isNaN(rating)) throw 'Error: Rating must be a number';
+        if (rating < 0 || rating > 10) throw 'Error: Rating must be a number between 0 and 10';
+        comment = await helper.checkString(comment, 'Comment');
         const ratingCollection = await ratings();
         const dateAdded = new Date().toLocaleDateString();
         const newRating = {userID, ratingID, rating, comment, dateAdded};
@@ -20,6 +25,7 @@ export const addRating = async (userID, ratingID, rating, comment) => {
 }
 
 export const getRatingsById = async (ratingID) => {
+    ratingID = await helper.checkId(ratingID, 'Rating ID');
     const ratingCollection = await ratings();
     let ratingList = await ratingCollection.find({ratingID: ratingID}).toArray();
     if (!ratingList) throw 'Error: Could not get tool collection';
@@ -29,6 +35,7 @@ export const getRatingsById = async (ratingID) => {
 export const getRatingsByTool = async (toolID) => {
     // to do
     // add validation condition for toolID
+    toolID = await helper.checkId(toolID, 'Tool ID');
     const ratingCollection = await ratings();
     const toolratings = await ratingCollection.find({_id : new ObjectId(toolID)}).toArray();
     return toolratings;
@@ -37,6 +44,7 @@ export const getRatingsByTool = async (toolID) => {
 export const getRatingsByUser = async (userID) => {
     // to do
     // add validation condition for userID
+    userID = await helper.checkId(userID, 'User ID');
     const ratingCollection = await ratings();
     const userratings = await ratingCollection.find({_id : new ObjectId(userID)}).toArray();
     return userratings;
