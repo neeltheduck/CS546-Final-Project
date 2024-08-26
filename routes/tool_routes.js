@@ -7,7 +7,7 @@ import{
     containsNumbers, 
 } from './../helpers.js'
 import {addTool,getAllTools,getToolWithID,deleteTool,updateTool, getToolWithUserID,searchTools} from '../data/tools.js';
-import {toolRequested} from '../data/users.js';
+import {toolRequested, addToWishList} from '../data/users.js';
 
 router.route('/lenderportalpage')
     .get(async (req, res) => {
@@ -239,27 +239,45 @@ router.route('/tools/:id')
         }
     })
 .post(async (req, res) => {
-        let req_username = req.body.req_username;
-        let lender_id = req.body.lender_id;
-        let tool_id = req.body.tool_id;
-        let start_date = req.body.start_date;
-        let end_date = req.body.end_date;
-        try {
-            req_username = await helper.checkString(req_username, 'Username');
-            lender_id = await helper.checkId(lender_id, 'User ID');
-            tool_id = await helper.checkId(tool_id, 'Tool ID');
-            start_date = await helper.checkDate(new Date(start_date), 'Start Date');
-            end_date = await helper.checkDate(new Date(end_date), 'End Date');
-            let result = await toolRequested(lender_id, req_username, tool_id, start_date, end_date, 'pending');
-            if (!result) return res.status(500).render('toolbyid', {hasErrors: true, error: 'Error: Could not request tool'});
-            const tool = await getToolWithID(tool_id);
-            if (!tool) return res.status(500).render('toolbyid', {hasErrors: true, error: "Error: Could not get tool"});
-            let start = tool.availability.start.toISOString().split('T');
-            let end = tool.availability.end.toISOString().split('T');
-            return res.render('toolbyid', {themePreference: req.session.user.themePreference, tool: tool, start: start[0], end: end[0], reqSuccess: true});
-        } catch (e) {
-            return res.status(500).render('toolbyid', {hasErrors: true, error: e});
-        } 
+        if (req.body.form_type === 'tool_request') {
+            let req_username = req.body.req_username;
+            let lender_id = req.body.lender_id;
+            let tool_id = req.body.tool_id;
+            let start_date = req.body.start_date;
+            let end_date = req.body.end_date;
+            try {
+                req_username = await helper.checkString(req_username, 'Username');
+                lender_id = await helper.checkId(lender_id, 'User ID');
+                tool_id = await helper.checkId(tool_id, 'Tool ID');
+                start_date = await helper.checkDate(new Date(start_date), 'Start Date');
+                end_date = await helper.checkDate(new Date(end_date), 'End Date');
+                let result = await toolRequested(lender_id, req_username, tool_id, start_date, end_date, 'pending');
+                if (!result) return res.status(500).render('toolbyid', {hasErrors: true, error: 'Error: Could not request tool'});
+                const tool = await getToolWithID(tool_id);
+                if (!tool) return res.status(500).render('toolbyid', {hasErrors: true, error: "Error: Could not get tool"});
+                let start = tool.availability.start.toISOString().split('T');
+                let end = tool.availability.end.toISOString().split('T');
+                return res.render('toolbyid', {themePreference: req.session.user.themePreference, tool: tool, start: start[0], end: end[0], reqSuccess: true});
+            } catch (e) {
+                return res.status(500).render('toolbyid', {hasErrors: true, error: e});
+            } 
+        } else if (req.body.form_type === 'add_wishlist') {
+            let toolID = req.body.tool_id;
+            let username = req.body.user;
+            try {
+                toolID = await helper.checkId(toolID, 'Tool ID');
+                username = await helper.checkString(username, 'Username');
+                let result = await addToWishlist(username, toolID);
+                if (!result) return res.status(500).render('toolbyid', {hasErrors: true, error: 'Error: Could not add tool to wish list'});
+                const tool = await getToolWithID(toolID);
+                if (!tool) return res.status(500).render('toolbyid', {hasErrors: true, error: "Error: Could not get tool"});
+                let start = tool.availability.start.toISOString().split('T');
+                let end = tool.availability.end.toISOString().split('T');
+                return res.render('toolbyid', {tool: tool, start: start[0], end: end[0], wishlistSuccess: true});
+            } catch (e) {
+                return res.status(500).render('toolbyid', {hasErrors: true, error: e});
+            }
+        }
     });
     
 export default router;
