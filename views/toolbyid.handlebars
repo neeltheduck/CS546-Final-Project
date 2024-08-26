@@ -43,6 +43,9 @@
             {{!-- <p>Availability: {{tool.availability}}</p> --}}
             <p>Location: {{tool.location}}</p>
             <p>Date Added: {{tool.dateAdded}}</p>
+            {{#if hasErrors}}
+                <div class="error">{{error}}</div>
+            {{/if}}
             <form id="tool_request" name="tool_request" method="POST">
                 <label for="req_username">Your Username:</label>
                 <input type="text" id="req_username" name="req_username">
@@ -54,12 +57,19 @@
                 <input type="date" id="end_date" name="end_date" min={{start}} max={{end}}>
                 <br>
                 <input type="submit" value="Send Request">
-            </form>
-            {{#if hasErrors}}
-                <div class="error">{{error}}</div>
-            {{/if}}
+            </form>  
             {{#if reqSuccess}}
                 <p>Request successfully sent!</p>
+            {{/if}}
+            <form id="add_wishlist" name="add_wishlist" method="POST">
+                <input type="hidden" id="form_type" name="form_type" value="add_wishlist">
+                <input type="hidden" id="tool_id" name="tool_id" value={{tool._id}}>
+                <label for="user">Username:</label>
+                <input type="text" id="user" name="user">
+                <input type="submit" value="Add to Wishlist">
+            </form>
+            {{#if wishlistSuccess}}
+                <p>Tool added to wishlist!</p>
             {{/if}}
             <p><a href="javascript:history.back()">Back</a></p>
             <script src="../public/js/client_side_validation.js"></script>
