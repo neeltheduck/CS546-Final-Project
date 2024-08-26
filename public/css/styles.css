@@ -382,6 +382,20 @@ body.light .toolArt h4 {
     color: rgb(153,153,153);
 }
 
+/* Tool condition styling */
+body.light .toolArt p {
+    font-size: 1em;
+    margin: 8px 0;
+    color: rgb(255, 255, 255);
+}
+
+/* Tool condition styling */
+body.dark .toolArt p {
+    font-size: 1em;
+    margin: 8px 0;
+    color: rgb(0, 0, 0);
+}
+
 /* Hover effect for the tool article */
 .toolArt:hover {
     transform: translateY(-5px);
