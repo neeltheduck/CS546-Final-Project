@@ -9,6 +9,7 @@ import{
 } from './../helpers.js'
 import {addTool,getAllTools,getToolWithID,deleteTool,updateTool, getToolWithUserID,searchTools, addWishlist} from '../data/tools.js';
 import {toolRequested} from '../data/users.js';
+import xss from 'xss';
 
 router.route('/lenderportalpage')
     .get(async (req, res) => {
@@ -95,15 +96,15 @@ router.route('/toolsedit/:id')
             console.log("inside tooledit route post");
             console.log(req.body);
             const toolData = {
-                _id: req.body._id,
-                toolName: req.body.toolName,
-                description: req.body.description,
-                condition: req.body.condition,
+                _id: xss(req.body._id),
+                toolName: xss(req.body.toolName),
+                description: xss(req.body.description),
+                condition: xss(req.body.condition),
                 userID: req.session.user._id,
-                dateAdded: req.body.dateAdded,
-                availability: req.body.availability,
-                location: req.body.autocomplete,
-                image: req.body.image
+                dateAdded: xss(req.body.dateAdded),
+                availability: xss(req.body.availability),
+                location: xss(req.body.autocomplete),
+                image: xss(req.body.image)
             }
             console.log(toolData);
             const updatetools = await updateTool(toolData);
@@ -134,13 +135,13 @@ router.route('/toolsregister')
     })
     .post(async (req, res) => {
         try {
-            let toolName= req.body.toolName;
-            let description= req.body.description;
-            let condition= req.body.condition;
-            let userID= req.session.user._id;
-            let availability={start: new Date(req.body.start_date), end: new Date(req.body.end_date)};
-            let location= req.body.autocomplete;
-            let image= req.body.image;
+            let toolName = xss(req.body.toolName);
+            let description = xss(req.body.description);
+            let condition = xss(req.body.condition);
+            let userID = req.session.user._id;
+            let availability = {start: new Date(xss(req.body.start_date)), end: new Date(xss(req.body.end_date))};
+            let location = xss(req.body.autocomplete);
+            let image = xss(req.body.image);
             console.log(availability);
             toolName = await helper.checkString(toolName, 'Tool Name');
             description = await helper.checkString(description, 'Description');
@@ -175,8 +176,9 @@ router.route('/tools')
     })
     .post(async (req, res) => {
         try{
-            let search=req.body.search
-            let condition=req.body.condition
+            let search = xss(req.body.search);
+            let condition = xss(req.body.condition);
+
             search= checkIsProperString(search,"Search")
         let tools=await searchTools(search,condition)
         res.json({success: true, tools: tools, search: search});
@@ -239,11 +241,17 @@ router.route('/tools')
             } 
 
             else if (req.body.action === 'request') {
-                let req_username = await helper.checkString(req.body.req_username, 'Username');
-                let lender_id = await helper.checkId(req.body.lender_id, 'User ID');
-                let tool_id = await helper.checkId(req.body.tool_id, 'Tool ID');
-                let start_date = await helper.checkDate(new Date(req.body.start_date), 'Start Date');
-                let end_date = await helper.checkDate(new Date(req.body.end_date), 'End Date');
+                let req_username = xss(req.body.req_username);
+                let lender_id = xss(req.body.lender_id);
+                let tool_id = xss(req.body.tool_id);
+                let start_date = new Date(xss(req.body.start_date));
+                let end_date = new Date(xss(req.body.end_date));
+
+                req_username = await helper.checkString(req_username, 'Username');
+                lender_id = await helper.checkId(lender_id, 'User ID');
+                tool_id = await helper.checkId(tool_id, 'Tool ID');
+                start_date = await helper.checkDate(start_date, 'Start Date');
+                end_date = await helper.checkDate(end_date, 'End Date');
 
                 let result = await toolRequested(lender_id, req_username, tool_id, start_date, end_date, 'pending');
                 if (!result) {

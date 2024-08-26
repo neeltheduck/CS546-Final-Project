@@ -4,6 +4,7 @@ const router = Router();
 import {getUser, get, toolRequested} from '../data/users.js';
 import helper from '../helpers.js';
 //import {authCheck} from app.js;
+import xss from 'xss';
 
 
 // getUser
@@ -37,12 +38,12 @@ router
 })
 .post('/:username', async (req, res) => {
     console.log(req.body);
-    let lender_id = req.body.lender_id;
-    let req_username = req.body.req_username;
-    let tool_id = req.body.tool_id;
-    let start_date = req.body.start_date;
-    let end_date = req.body.end_date;
-    let status = req.body.approval;
+    let lender_id = xss(req.body.lender_id);
+    let req_username = xss(req.body.req_username);
+    let tool_id = xss(req.body.tool_id);
+    let start_date = xss(req.body.start_date);
+    let end_date = xss(req.body.end_date);
+    let status = xss(req.body.approval);
     try {
         lender_id = await helper.checkId(lender_id, 'User ID');
         req_username = await helper.checkString(req_username, 'Username');

@@ -8,6 +8,8 @@ import{
 import helper from '../helpers.js';
 import { Router } from 'express';
 const router = Router();
+import xss from 'xss';
+
 //need to add session middleware
 // router.route('/').get(async (req, res) => {
 //     //code here for GET THIS ROUTE SHOULD NEVER FIRE BECAUSE OF MIDDLEWARE #1 IN SPECS.
@@ -24,15 +26,15 @@ router.route('/register').get(async (req, res) => {
     })
     .post(async (req, res) => {
     //code here for POST
-        let firstName= req.body.firstName
-        let lastName=req.body.lastName
-        let username=req.body.username
-        let password=req.body.password
-        let bio=req.body.bio
-        let themePreference=req.body.themePreference
-        let pronouns=req.body.pronouns
-        let confirmPassword=req.body.confirmPassword
-        let userLocation= req.body.userLocation
+    let firstName = xss(req.body.firstName);
+    let lastName = xss(req.body.lastName);
+    let username = xss(req.body.username);
+    let password = xss(req.body.password);
+    let bio = xss(req.body.bio);
+    let themePreference = xss(req.body.themePreference);
+    let pronouns = xss(req.body.pronouns);
+    let confirmPassword = xss(req.body.confirmPassword);
+    let userLocation = xss(req.body.userLocation);
         
         try {
             firstName = await helper.checkString(firstName, "First Name");
@@ -86,7 +88,11 @@ router.route('/login').get(async (req, res) => {
     })
     .post(async (req, res) => {
         //code here for POST
-    const logindata = req.body;
+        let logindata = {
+            username: xss(req.body.username),
+            password: xss(req.body.password)
+        };
+        
     try {
         logindata.username = await helper.checkString(logindata.username, 'Username');
         logindata.password = await helper.checkString(logindata.password, 'Password');

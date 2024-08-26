@@ -3,6 +3,7 @@ import helper from '../helpers.js';
 // import { Router } from 'express';
 // const router = Router();
 const router = express.Router();
+import xss from 'xss';
 
 router
     .route('/review/:id')
@@ -17,8 +18,8 @@ router
     })
     .post(async (req, res) => {
         try{
-            let rating = req.body.rating
-            let review = req.body.review
+            let rating = xss(req.body.rating);
+            let review = xss(req.body.review);
             
             let tools=await searchTools(search,condition)
             res.json({success: true, tools: tools, search: search});
