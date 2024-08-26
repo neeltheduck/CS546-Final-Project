@@ -1,7 +1,7 @@
 import express from 'express';
 import {Router} from 'express';
 const router = Router();
-import {getUser, getUserByID, toolRequested} from '../data/users.js';
+import {getUser, get, toolRequested} from '../data/users.js';
 import helper from '../helpers.js';
 //import {authCheck} from app.js;
 
@@ -11,12 +11,12 @@ router
 .get('/:username', async (req, res) => {
     try {
         let currentUsername = req.params.username;
-        console.log(currentUsername)
-        currentUsername = await helper.checkString(currentUsername, 'Username');
         let user = await getUser(currentUsername);
+
         if (!user){
             return res.status(404).send('Sorry! User not found.');
         }
+
         res.render('users', {
             firstName: user.firstName,
             lastName: user.lastName,
@@ -32,7 +32,7 @@ router
             wishList: user.wishList,
         });
     } catch (error) {
-        res.status(500).json({error});
+        res.status(500).send('Error: Internal Server Error.');
     }
 })
 .post('/:username', async (req, res) => {
@@ -52,7 +52,7 @@ router
         status = await helper.checkString(status, 'Status');
         let result = await toolRequested(lender_id, req_username, tool_id, start_date, end_date, status);
         if (!result) return res.status.render('users', {hasErrors: true, error: 'Error: Could not accept/decline request'});
-        let user = await getUserByID(lender_id);
+        let user = await get(lender_id);
         if (!user) return res.status(404).send('Error: User not found');
         return res.render('users', {
             firstName: user.firstName,

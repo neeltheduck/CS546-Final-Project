@@ -63,12 +63,11 @@ export const getAllTools = async () => {
     return toolList;
 };
 
-export const searchTools = async (search) => {
+export const searchTools = async (search, condition) => {
     const toolCollection = await tools();
     let toolList = await toolCollection.find({ toolName: { $regex: search, $options: "i" } }).toArray();
     let toolList2 = await toolCollection.find({ description: { $regex: search, $options: "i" } }).toArray();
     toolList=toolList.concat(toolList2)
-    if (toolList.length==0) throw 'Error: Could not find tools'
     let ids = toolList.map(item => item._id.toString());
     ids= [...new Set(ids)];
     let output=[]
@@ -77,8 +76,25 @@ export const searchTools = async (search) => {
         tool = await getToolWithID(id)
         output.push(tool)
     }
+    if(condition!=="any"){
+        output=await filterCondition(output,condition)
+    }
+    if (output.length==0) throw 'Sorry no tools found :('
     return output;
 };
+
+export const filterCondition = async (tools,condition) => {
+    let output=[]
+    console.log(condition)
+    for (let tool of tools){
+        console.log(tool)
+        if(tool.condition===condition){
+            output.push(tool)
+        }
+    }
+    return output;
+};
+
 
 // getToolWithID
 export const getToolWithID = async (id) => {

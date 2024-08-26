@@ -11,13 +11,24 @@
         <a href="/users">Profile</a> 
         <a href="/lenderportalpage">Manage</a>
     </header>
-
-<h1>tools list</h1>
+    <div class="searchToolForm">
     <form id="searchForm">
-        <label for="search_term"></label>
+        <label for="search_term">Search: </label>
         <input id="search_term" type="text">
-        <button type="submit">Search</button>
+        <label for="condition">Condition: </label>
+            <select name="condition" id="condition">
+                <option value="any">Any</option>
+                <option value="Like New">Like New</option>
+                <option value="Very Good">Very Good</option>
+                <option value="Good">Good</option>
+                <option value="Ok">ok</option>
+                <option value="Minor Damage">Minor Damage</option>
+                <option value="Some Damage">Some Damage</option>
+                <option value="Very Damaged">Very Damaged</option>
+            </select>
+        <button type="submit">Submit</button>
     </form>
+    </div>
 
     <div id="error" class="error" hidden></div>
         <div class="toolsSearchedPage" id="toolsSearchedPage" hidden>

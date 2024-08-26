@@ -15,7 +15,11 @@
             <p>End Date: {{end}}</p>
             <p>Location: {{tool.location}}</p>
             {{!-- <p>Images: <img src="{{tool.images}}" alt="{{tool.toolName}} image"></p> --}}
+            {{#if hasErrors}}
+                <div class="error">{{error}}</div>
+            {{/if}}
             <form id="tool_request" name="tool_request" method="POST">
+                <input type="hidden" id="form_type" name="form_type" value="tool_request">
                 <label for="req_username">Your Username:</label>
                 <input type="text" id="req_username" name="req_username">
                 <input type="hidden" id="lender_id" name="lender_id" value={{tool.userID}}>
@@ -27,12 +31,19 @@
                 <br>
                 <input type="submit" value="Send Request">
             </form>
-            {{#if hasErrors}}
-                <div class="error">{{error}}</div>
-            {{/if}}
             {{#if reqSuccess}}
                 <p>Request successfully sent!</p>
             {{/if}}
-            <a href="/landing">Back to tools list</a>
+            <form id="add_wishlist" name="add_wishlist" method="POST">
+                <input type="hidden" id="form_type" name="form_type" value="add_wishlist">
+                <input type="hidden" id="tool_id" name="tool_id" value={{tool._id}}>
+                <label for="user">Username:</label>
+                <input type="text" id="user" name="user">
+                <input type="submit" value="Add to Wishlist">
+            </form>
+            {{#if wishlistSuccess}}
+                <p>Tool added to wishlist!</p>
+            {{/if}}
+            <a href="javascript:history.back()">Back</a>
             <script src="../public/js/client_side_validation.js"></script>
 </body>

@@ -1,33 +1,36 @@
 import { ratings } from "../config/mongoCollections.js";
 import {ObjectId} from 'mongodb';
 import { dbConnection } from "../config/mongoConnection.js";
+import helper from '../helpers.js';
 
-export const addRating = async ({userID, toolID, rating, comment}) => {
+export const addRating = async (userID, ratingID, rating, comment) => {
     try {
-        // apparently js has Rating stuff built in. nice
-        // just used my code, need to change it to usebuild in one --Kp
+        userID = await helper.checkId(userID, 'User ID');
+        ratingID = await helper.checkId(ratingID, 'Rating ID');
+        if (isNaN(rating)) throw 'Error: Rating must be a number';
+        if (rating < 0 || rating > 10) throw 'Error: Rating must be a number between 0 and 10';
+        comment = await helper.checkString(comment, 'Comment');
         const ratingCollection = await ratings();
-        // console.log(newRating);
-        const date = new Date().toLocaleDateString();;
-        const newRating = {userID, toolID, rating, comment, date};
-        // let newRating = new Rating({ratingID, userID, toolID, rating, comment});
-        // await newRating.save();
-        console.log("Rating object created.");
-        console.log(newRating);
+        const dateAdded = new Date().toLocaleDateString();
+        const newRating = {userID, ratingID, rating, comment};
         const result = await ratingCollection.insertOne(newRating);
-        // await newRating.save();
-        console.log("Rating added successfully.");
-        console.log(result);
-        return result;
+
+        if (!result.acknowledged || !result.insertedId) throw 'Error: Rating could not be inserted into database';
+        return result.insertedId.toString();
+
     } catch (e) {
+        console.log("Error in addRating:");
         console.log(e);
         throw `Error: Rating was not successfully added.`;
     }
 }
 
+
+
 export const getRatingsByTool = async (toolID) => {
     // to do
     // add validation condition for toolID
+    toolID = await helper.checkId(toolID, 'Tool ID');
     const ratingCollection = await ratings();
     const toolratings = await ratingCollection.find({_id : new ObjectId(toolID)}).toArray();
     return toolratings;
@@ -36,6 +39,7 @@ export const getRatingsByTool = async (toolID) => {
 export const getRatingsByUser = async (userID) => {
     // to do
     // add validation condition for userID
+    userID = await helper.checkId(userID, 'User ID');
     const ratingCollection = await ratings();
     const userratings = await ratingCollection.find({_id : new ObjectId(userID)}).toArray();
     return userratings;

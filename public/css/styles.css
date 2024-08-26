@@ -50,7 +50,7 @@ textarea{
     margin-top: 3em;
 }
 
-h1 {
+h1{
     color: #333;
     text-align: center;
     margin-top: 20px;
@@ -240,6 +240,52 @@ body.dark a.back {
     color: #ffffff;
 }
 
+body.light .greeting h1,  body.light .greeting h3, body.light .greeting h2{
+    color: #000000;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    text-align: center;      /* Center text inside the greeting */
+
+}
+body.dark .greeting h1,  body.dark .greeting h3, body.dark .greeting h2 {
+    color: #ffffff;
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center;     /* Center vertically */
+    text-align: center;      /* Center text inside the greeting */
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.scroll-container {
+    display: grid;
+    gap: 5%;
+    grid-auto-flow: column;
+    grid-auto-columns: 30%;
+
+    overflow-x: auto;
+    overflow-y: hidden; /* Prevent vertical scrolling */
+    overscroll-behavior-inline: contain;
+}
+
 /* Container for all tool links */
 .toolsDiv {
     display: flex;
@@ -262,6 +308,10 @@ body.dark a.back {
     margin-bottom: 20px;
 }
 
+.scroll-container .toolLink{
+    max-width: 100%;
+}
+
 /* Individual tool article */
 .toolArt {
     border: 1px solid #ddd;
@@ -276,6 +326,11 @@ body.dark a.back {
     justify-content: space-between;
 }
 
+body.light .toolArt{
+    border: 1px solid rgb(34,34,34);
+    background-color: rgb(6,6,6);
+}
+
 /* Tool image styling */
 .toolImage {
     width: 100%;
@@ -288,21 +343,43 @@ body.dark a.back {
 .toolArt h2 {
     font-size: 1.5em;
     margin: 16px 0 8px;
-    color: #333;
+    color: #000;
 }
 
 /* Tool description styling */
 .toolArt h3 {
     font-size: 1.2em;
     margin: 8px 0;
-    color: #666;
+    color: #333;
 }
 
 /* Tool condition styling */
 .toolArt h4 {
     font-size: 1em;
     margin: 8px 0;
-    color: #999;
+    color: #666;
+}
+
+/* Tool name styling */
+body.light .toolArt h2 {
+    font-size: 1.5em;
+    margin: 16px 0 8px;
+    
+    color: rgb(255,255,255);
+}
+
+/* Tool description styling */
+body.light .toolArt h3 {
+    font-size: 1.2em;
+    margin: 8px 0;
+    color: rgb(204,204,204);
+}
+
+/* Tool condition styling */
+body.light .toolArt h4 {
+    font-size: 1em;
+    margin: 8px 0;
+    color: rgb(153,153,153);
 }
 
 /* Hover effect for the tool article */
@@ -324,4 +401,37 @@ body.dark a.back {
         flex: 1 1 calc(100% - 20px); /* One item per row on smaller screens */
         max-width: 100%;
     }
+}
+
+
+.searchToolForm {
+    display: flex;
+    justify-content: center; /* Center the form horizontally */
+    padding: 20px; /* Optional: Add some padding around the form */
+}
+
+#searchForm {
+    display: flex;
+    align-items: center; /* Align items vertically in the center */
+    gap: 10px; /* Optional: Add some space between the elements */
+}
+
+#searchForm label {
+    margin-right: 5px; /* Space between label and input/select */
+}
+
+#search_term {
+    padding: 5px;
+    font-size: 1em;
+}
+
+#condition {
+    padding: 5px;
+    font-size: 1em;
+}
+
+#searchForm button {
+    padding: 5px 10px;
+    font-size: 1em;
+    cursor: pointer;
 }

@@ -196,11 +196,12 @@
 
 let searchForm = $('#searchForm');
 let searchInput = $('#search_term');
-
+let condition = $('#condition');
 searchForm.submit(function (event) {
     event.preventDefault();
     
     let search = searchInput.val();
+    let con = condition.val();
     let toolSearchedPage=document.getElementById("toolsSearchedPage")
     let err=document.getElementById('error')
     err.hidden=true
@@ -223,7 +224,7 @@ searchForm.submit(function (event) {
         $.ajax({
             method: 'POST',
             url: `/tools`,
-            data: { search: search },
+            data: { search: search , condition: con },
         }).then(function (responsePage1) {
             displayFunc(responsePage1)
         });

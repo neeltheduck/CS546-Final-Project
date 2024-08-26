@@ -37,30 +37,28 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
     </div>
 
     <h2>Listed Tools</h2>
-    <ul>
-        {{#each listedTools}}
-        <li>
-            <img src="/public/uploads/{{image}}" alt="Image of {{toolName}}" style="width:100px; height:100px;">
-            <p>Tool Name: {{toolName}}</p>
-            <p>Description: {{description}}</p>
-            <p>Condition: {{condition}}</p>
-            <p>Location: {{location}}</p>
-        </li>
-        {{/each}}
-    </ul>
+    <ul class="scroll-container" id="scroll-container">
+    
+            {{#each listedTools}}
+            <a href="/tools/{{_id}}" class="toolLink">
+            <article class="toolArt">
+                <img class="toolImage" alt="{{toolName}} image" src="public/uploads/{{image}}"> <br> <h2>{{toolName}}</h2> <br> <h3>{{description}}</h3> <h4>condition: {{condition}}</h4> 
+            </article>
+            </a>
+            {{/each}}
+    </ul> 
 
     <h2>Borrowed Tools</h2>
-    <ul>
-        {{#each borrowedTools}}
-        <li>
-            <img src="/public/uploads/{{image}}" alt="Image of {{toolName}}" style="width:100px; height:100px;">
-            <p>Tool Name: {{toolName}}</p>
-            <p>Description: {{description}}</p>
-            <p>Condition: {{condition}}</p>
-            <p>Location: {{location}}</p>
-        </li>
-        {{/each}}
-    </ul>    
+    <ul class="scroll-container" id="scroll-container">
+    
+            {{#each borrowedTools}}
+            <a href="/tools/{{_id}}" class="toolLink">
+            <article class="toolArt">
+                <img class="toolImage" alt="{{toolName}} image" src="public/uploads/{{image}}"> <br> <h2>{{toolName}}</h2> <br> <h3>{{description}}</h3> <h4>condition: {{condition}}</h4> 
+            </article>
+            </a>
+            {{/each}}
+    </ul>   
 
     <h2>Previously Reserved Tools</h2>
     <ul>

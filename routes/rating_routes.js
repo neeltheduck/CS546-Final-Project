@@ -1,8 +1,8 @@
-import express from 'express';
+// import express from 'express';
 import helper from '../helpers.js';
-// import { Router } from 'express';
-// const router = Router();
-const router = express.Router();
+import { Router } from 'express';
+const router = Router();
+// const router = express.Router();
 import { addRating, getRatingsByTool, getRatingsByUser } from '../data/ratings.js';
 
 router
@@ -56,18 +56,18 @@ router
     })
 
 
-router
-    .route('/ratings/tool/:toolID')
-    .get(async (req, res) => {
-        try {
-            let toolParameter = req.params.toolID;
-            toolParameter = await helper.checkId(toolParameter, 'Tool ID');
-            let ratings = await getRatingsByTool(toolParameter);
-            // not sure what to do here, maybe req.json(ratings)
-        }
-        catch (error) {
-            res.status(500).json({error: error.message})
-        }
-    })
+// router
+//     .route('/ratings/tool/:toolID')
+//     .get(async (req, res) => {
+//         try {
+//             let toolParameter = req.params.toolID;
+//             toolParameter = await helper.checkId(toolParameter, 'Tool ID');
+//             let ratings = await getRatingsByTool(toolParameter);
+//             // not sure what to do here, maybe req.json(ratings)
+//         }
+//         catch (error) {
+//             res.status(500).json({error: error.message})
+//         }
+//     })
 
 export default router;

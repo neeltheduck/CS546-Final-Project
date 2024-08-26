@@ -206,8 +206,10 @@ export const loginUser = async (username, password) => {
 };
 
 export const updateTool = async (userId, tool) => {
-    
+    userId = await helper.checkId(userId, 'User ID');
     const userCollection = await users();
+    let user = await userCollection.findOne({_id: new ObjectId(userId)});
+    if (!user) throw 'Error: User not found';
     const updatedInfo = await userCollection.updateOne(
       {_id: new ObjectId(userId)},
       {$push: {listedTools: tool}}
@@ -233,27 +235,35 @@ export const updateTool = async (userId, tool) => {
   };
 
   export const getByUserName = async (username) =>{
+    username = await helper.checkString(username, 'Username');
     const collectionUser = await users();
-
-    return await collectionUser.findOne({ username: username });
-  }
+    let user = await collectionUser.findOne({username: username});
+    if (!user) throw 'Error: User not found';
+    return user;
+  };
 
   export const getUser = async (username) =>{
+    username = await helper.checkString(username, 'Username');
     const collectionUser = await users();
-
-    return await collectionUser.findOne({ username: username });
-  }
+    let user = await collectionUser.findOne({username: username});
+    if (!user) throw 'Error: User not found';
+    return user;
+  };
 
 export const toolRequested = async (lenderID, requesterUsername, toolID, start_date, end_date, newStatus) => {
+    const userCollection = await users();
     lenderID = await helper.checkId(lenderID, 'User ID');
+    let user = await userCollection.findOne({_id: new ObjectId(lenderID)});
+    if (!user) throw 'Error: Lending user not found';
     requesterUsername = await helper.checkString(requesterUsername, 'Username');
+    user = await userCollection.findOne({username: username});
+    if (!user) throw 'Error: Requesting user not found';
     toolID = await helper.checkId(toolID, 'Tool ID');
     newStatus = await helper.checkString(newStatus, 'Status');
 
     let tool = await getToolWithID(toolID);
     let updateInfo;
 
-    const userCollection = await users();
     if (newStatus === 'pending') { 
         updateInfo = await userCollection.updateOne(
             {_id: new ObjectId(lenderID)},
@@ -286,3 +296,18 @@ export const toolRequested = async (lenderID, requesterUsername, toolID, start_d
     
     return updateInfo;
 };
+
+export const addToWishlist = async (username, toolID) => {
+    let userCollection = await users();
+    username = await helper.checkString(username, 'Username');
+    let user = await userCollection.findOne({username: username});
+    if (!user) throw 'Error: User not found'
+    toolID = await helper.checkId(toolID, 'Tool ID');
+    let updateInfo = await userCollection.updateOne(
+        {username: username},
+        {$addToSet: {wishList: toolID}}
+    );
+    console.log(updateInfo);
+    if (!updateInfo) throw 'Error: Could not add tool to wish list';
+    return updateInfo;
+}
