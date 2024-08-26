@@ -201,9 +201,9 @@ router.route('/tools')
             console.log(tool.dateAdded);
             console.log("typeof Date Added:");
             console.log(typeof tool.dateAdded);
-            let day=tool.dateAdded.getDay();
-            console.log("Day:");
-            console.log(day);
+            //let day=tool.dateAdded.getDay();
+            //console.log("Day:");
+            //console.log(day);
             let available= new Array(14).fill(null);
             console.log("available:");
             console.log(available);
