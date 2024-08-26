@@ -1,3 +1,5 @@
+
+
 {{!--
 
 If the user is logged in , and 'GET /user' endpoint is called, you will render this view based on the specs.
@@ -102,6 +104,33 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
         </li>
         {{/each}}
     </ul>
+
+    <h2>Reviews:</h2>
+    <ul class="reviewList">
+        {{#each reviews}}
+        <article class="reviewElem">
+            <div class="reviewer">            
+                <p>From: {{userID}}</p>
+            <p>Rating: {{rating}}/5</p>
+            <p>Posted: {{dateAdded}}</p>
+            </div>
+            <p>Review:</p>
+            <p>{{comment}}</p>
+        </article>
+        {{/each}}
+    </ul>
+
+    <h2>Wishlist</h2>
+    <ul class="scroll-container" id="scroll-container">
+    
+            {{#each wishList}}
+            <a href="/tools/{{_id}}" class="toolLink">
+            <article class="toolArt">
+                <img class="toolImage" alt="{{toolName}} image" src="public/uploads/{{image}}"> <br> <h2>{{toolName}}</h2> <br> <h3>{{description}}</h3> <h4>condition: {{condition}}</h4> 
+            </article>
+            </a>
+            {{/each}}
+    </ul>   
 
 
 

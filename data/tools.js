@@ -186,4 +186,38 @@ export const deleteTool = async (toolid,userid) => {
     }
 };
 
+
+export const addWishlist = async (userId, toolId) => {
+    try {
+        
+        userId = await helper.checkId(userId, 'User ID');
+        toolId = await helper.checkId(toolId, 'Tool ID');
+
+        let tool = await getToolWithID(toolId);
+
+        const userCollection = await users();
+        const user = await userCollection.findOne({ _id: new ObjectId(userId) });
+        if (!user) throw `Error: User with ID ${userId} not found`;
+
+        
+        if (!user.wishlist) {
+            user.wishlist = [];
+        }
+        if (user.wishlist.includes(toolId)) {
+            throw `Error: Tool with ID ${toolId} is already in the wishlist`;
+        }
+        
+
+        const updateInfo = await userCollection.updateOne( { _id: new ObjectId(userId) }, { $addToSet: { wishList: tool } });
+
+        if (updateInfo.modifiedCount === 0) {
+            throw `Error: Could not add tool with ID ${toolId} to the wishList`;
+        }
+
+        return { success: true, message: `Tool with ID ${toolId} added to wishList successfully` };
+    } catch (error) {
+        console.error("Error in addWishlist:", error);
+        throw `Error: Could not add tool to wishList. ${error}`;
+    }
+};
 // + error handling

@@ -256,7 +256,7 @@ export const toolRequested = async (lenderID, requesterUsername, toolID, start_d
     let user = await userCollection.findOne({_id: new ObjectId(lenderID)});
     if (!user) throw 'Error: Lending user not found';
     requesterUsername = await helper.checkString(requesterUsername, 'Username');
-    user = await userCollection.findOne({username: username});
+    user = await userCollection.findOne({username: requesterUsername});
     if (!user) throw 'Error: Requesting user not found';
     toolID = await helper.checkId(toolID, 'Tool ID');
     newStatus = await helper.checkString(newStatus, 'Status');
