@@ -30,7 +30,7 @@ async function main() {
     paint=paint.insertedId.toString()
     let fell=await tools.addTool("Computer","Fell HumanWare Computer (might contain virus)", "Very Damaged", adib._id.toString(), {start: new Date('2024-08-28'), end: new Date('2024-09-02')}, "Hoboken, NJ, USA","1724515479006.jpeg")
     fell=fell.insertedId.toString()
-    let esus=await tools.addTool("Computer","ESUS MenBook (antivirus firewall included)", "Like New", neel._id.toString(), v, "Hoboken, NJ, USA","1724515479007.jpeg")
+    let esus=await tools.addTool("Computer","ESUS MenBook (antivirus firewall included)", "Like New", neel._id.toString(), {start: new Date('2024-08-28'), end: new Date('2024-09-02')}, "Hoboken, NJ, USA","1724515479007.jpeg")
     esus=esus.insertedId.toString()
     let missiles=await tools.addTool("Missiles","fast and explosive", "Minor Damage", tara._id.toString(), {start: new Date('2024-08-28'), end: new Date('2024-09-02')}, "Hoboken, NJ, USA","1724515479008.jpeg")
     missiles=missiles.insertedId.toString()
