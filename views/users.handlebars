@@ -63,22 +63,21 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
     </ul>   
 
     <h2>Previously Reserved Tools:</h2>
-    <ul>
-        {{#each reservationHistory}}
-        <li>
-            <img src="/public/uploads/{{image}}" alt="Image of {{toolName}}" style="width:100px; height:100px;">
-            <p>Tool Name: {{toolName}}</p>
-            <p>Description: {{description}}</p>
-            <p>Condition: {{condition}}</p>
-            <p>Location: {{location}}</p>
-        </li>
-        {{/each}}
-    </ul>
+    <ul class="scroll-container" id="scroll-container">
+    
+            {{#each reservationHistory}}
+            <a href="/tools/{{_id}}" class="toolLink">
+            <article class="toolArt">
+                <img class="toolImage" alt="{{toolName}} image" src="public/uploads/{{image}}"> <br> <h2>{{toolName}}</h2> <br> <h3>{{description}}</h3> <h4>condition: {{condition}}</h4> 
+            </article>
+            </a>
+            {{/each}}
+    </ul> 
 
-    <h2>TradeStatuses:</h2>
-    <ul>
+       <h2>Trade Statuses:</h2>
+    <ul class="scroll-container" id="scroll-container">
         {{#each tradeStatuses}}
-        <li>
+        <article class="toolArt">
             <img src="/public/uploads/{{tool.image}}" alt="Image of {{tool.toolName}}" style="width:100px; height:100px;">
             <p>Tool Name: {{tool.toolName}}</p>
             <p>Description: {{tool.description}}</p>
@@ -101,9 +100,10 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
                 </select>
                 <input type="submit" value="Submit">
             </form>
-        </li>
+        </article>
         {{/each}}
     </ul>
+
 
     <h2>Reviews:</h2>
     <ul class="reviewList">
@@ -120,7 +120,7 @@ If the user is logged in , and 'GET /user' endpoint is called, you will render t
         {{/each}}
     </ul>
 
-    <h2>Wishlist:</h2>
+    <h2>Wishlist</h2>
     <ul class="scroll-container" id="scroll-container">
     
             {{#each wishList}}

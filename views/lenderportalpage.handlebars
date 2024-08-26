@@ -11,20 +11,19 @@
         <a href="/users">Profile</a> 
         <a href="/lenderportalpage">Manage</a>
     </header>
-        <h2>lender portal page, make changes to your tools here</h2>
+        <h1>Manage tools</h2>
 
 
-<h4><a href="/toolsregister">add new tool</a></h4>
+<h3 id="lenderh3"><a href="/toolsregister">add new tool</a></h3>
+
 {{#if tools.length}}
-    <ol>
         {{#each tools}}
-            <li>
-                
-                {{this.toolName}} <a href="/toolsedit/{{this._id}}">edit</a> <a href="/toolsdelete/{{this._id}}">delete</a>
+            <li id="lenderlist">
+                <img src="/public/uploads/{{this.image}}" alt="Image of {{this.toolName}}" style="width:250px; height:250px;">
+                <p id="lendernames">{{this.toolName}} <a href="/toolsedit/{{this._id}}">edit</a> <a href="/toolsdelete/{{this._id}}">delete</a></p>
                 
             </li>
         {{/each}}
-    </ol>
 {{else}}
     <p>No tools found.</p>
 {{/if}}
